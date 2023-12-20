@@ -38,9 +38,9 @@ const sellerProtect = asyncHandler(async (req, res, next) => {
     try {
       token = req.headers.authorization.split(" ")[1];
       // decode token
-      // console.log("//////", token);
+      console.log("++++++++++   ", token);
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      // console.log("---", decoded);
+      console.log("---  ", decoded);
       const seller = await Seller.findById(decoded.id).select("-password");
       if (!seller) {
         res.status(401);
@@ -55,6 +55,7 @@ const sellerProtect = asyncHandler(async (req, res, next) => {
   }
 
   if (!token) {
+    console.log(token);
     res.status(401);
     throw new Error("Not authorized, TOken Failed...");
   }

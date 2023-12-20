@@ -9,20 +9,22 @@ const addProduct = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error("Please Fill all the fields");
   }
+  console.log(images);
   let newProduct = {
     name,
     description,
     price,
+    images,
     category,
     stock,
     seller: req.seller._id,
   };
-  // console.log(newProduct);
+  console.log(newProduct);
   try {
     let product = await Product.create(newProduct);
     product = await product.populate("seller", "name email");
     const { data } = Seller.findById(req.seller._id);
-    // console.log(data);
+    console.log(product);
     res.status(201).json({
       product,
     });
@@ -70,7 +72,9 @@ const deleteProduct = asyncHandler(async (req, res) => {
 
 const viewProducts = asyncHandler(async (req, res) => {
   try {
-    let data = await Product.find({ seller: req.seller._id });
+    let data = await Product.find({ seller: req.seller._id }).sort({
+      createdAt: -1,
+    });
 
     res.status(200).json(data);
   } catch (error) {

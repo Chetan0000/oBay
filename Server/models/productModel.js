@@ -16,31 +16,27 @@ const productSchema = mongoose.Schema(
       required: true,
       maxLength: 8,
     },
-    ratings: {
-      type: Number,
-      default: 0,
+
+    images: {
+      type: String,
     },
-    images: [
-      {
-        url: {
-          type: String,
-        },
-      },
-    ],
+
     category: {
       type: String,
       required: true,
     },
     stock: {
       type: Number,
-      maxLength: 4,
       default: 1,
     },
     seller: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Seller",
     },
-
+    ratings: {
+      type: Number,
+      default: 0,
+    },
     reviews: [
       {
         user: {

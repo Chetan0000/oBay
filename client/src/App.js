@@ -1,0 +1,62 @@
+import React, { useState } from "react";
+import {
+  Routes,
+  Route,
+  createBrowserRouter,
+  RouterProvider,
+  createRoutesFromElements,
+  Router,
+  Switch,
+} from "react-router-dom";
+
+import { UserState } from "./context/userContext";
+// import {} from "react";
+import homePage from "./pagse/homePage";
+import Header from "./components/home/Header/Header";
+import Home from "./pagse/Home/home";
+
+// ------seller components -----------
+
+import SellerPage from "./pagse/SellerPage/sellerPage";
+import SellerHeader from "./seller-Dash/Seller_Header/header";
+import SellerDashBoard from "./seller-Dash/seller-dashboard/sellerDashBoard";
+import UserDash from "./UserDash";
+import SellerDash from "./SellerDash";
+import AddProduct from "./seller-Dash/seller-dashboard/AddProduct";
+
+const App = () => {
+  const [isLogin, setLsLogin] = useState(false);
+  const { user, seller } = UserState();
+  console.log("------------ ", seller);
+  if (seller) {
+  }
+  return (
+    <>
+      <div>
+        {/* {seller && window.location.pathname !== "/seller" ? (
+          <SellerHeader />
+        ) : (
+          <>
+            {user || window.location.pathname !== "/user" ? <Header /> : null}
+          </>
+        )} */}
+        {window.location.pathname === "/seller" ||
+        window.location.pathname === "/user" ? null : (
+          <>{(seller && <SellerHeader />) || <Header />}</>
+        )}
+        <Routes>
+          <Route path="/seller" element={<SellerPage />}></Route>
+
+          <Route path="/"></Route>
+
+          {/* ---------------------- seller Routes ------------------------ */}
+
+          <Route path="/seller/dash" element={<SellerDashBoard />}></Route>
+          <Route path="/seller/addProduct" element={<AddProduct />}></Route>
+        </Routes>
+      </div>
+    </>
+  );
+};
+
+export default App;

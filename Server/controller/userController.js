@@ -2,6 +2,8 @@ const User = require("../models/userModel");
 const asyncHandler = require("express-async-handler");
 const generateToken = require("../config/generateToken");
 const Cart = require("../models/cartModel");
+
+// ------------- user SIgn up -----------------------
 const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password, phone } = req.body;
   console.log(req.body);
@@ -37,15 +39,10 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 });
 
-// User SIgn UP function
+// ------------------User SIgn UP function--------------------
 const authUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
   console.log(email, password);
-
-  if (!email || !password) {
-    res.status(400);
-    throw new Error(`Please fill the all Fields`);
-  }
 
   const user = await User.findOne({ email });
 

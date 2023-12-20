@@ -6,15 +6,13 @@ const registerSeller = asyncHandler(async (req, res) => {
   const { name, email, phone, password } = req.body;
 
   if (!name || !email || !phone || !password) {
-    res.status(400);
-    throw new Error(`Please fill all the fields`);
+    return res.status(400).send(`Please fill all the fields`);
   }
 
   const sellerExist = await Seller.findOne({ email });
 
   if (sellerExist) {
-    res.status(400);
-    throw new Error(`User Exist`);
+    return res.status(400).send(`User Exist`);
   }
 
   const seller = await Seller.create({
@@ -33,8 +31,7 @@ const registerSeller = asyncHandler(async (req, res) => {
       token: generateToken(seller._id),
     });
   } else {
-    res.status(400);
-    throw new Error(`Failed to create Seller try again later`);
+    return res.status(400).send(`Failed to create Seller try again later`);
   }
 });
 
@@ -43,12 +40,11 @@ const authSeller = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
   console.log(req.body);
   if (!email || !password) {
-    res.status(400);
-    throw new Error(`Please fill all the fields`);
+    return res.status(400).send(`Please fill all the fields`);
   }
 
   const seller = await Seller.findOne({ email });
-  console.log(seller);
+  // console.log(seller);
   if (seller && (await seller.matchPassword(password))) {
     res.json({
       _id: seller._id,
@@ -59,8 +55,7 @@ const authSeller = asyncHandler(async (req, res) => {
     });
     console.log(seller);
   } else {
-    res.status(400);
-    throw new Error(`Invalid email or password`);
+    return res.status(400).send("Invalid email or password");
   }
 });
 
