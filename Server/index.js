@@ -4,6 +4,7 @@ const connectDb = require("./config/mongoo");
 const homeRouter = require("./routes/homeRouter");
 const userRouter = require("./routes/userRouter");
 const sellerRouter = require("./routes/sellerRouter");
+const productRouter = require("./routes/productRouter");
 
 dotenv.config();
 connectDb();
@@ -11,11 +12,14 @@ const app = express();
 app.use(express.urlencoded());
 app.use(express.json()); // to accept json data
 
-// Routes
+// -----------Routes ----------------
 app.use("/", homeRouter);
 app.use("/user", userRouter);
 
-// Seller routes
+// --------- product ROutes --------------
+app.use("/product", productRouter);
+
+// ---------Seller routes-----------------
 app.use("/seller", sellerRouter);
 
 const PORT = process.env.PORT;

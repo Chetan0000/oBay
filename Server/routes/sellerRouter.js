@@ -8,6 +8,7 @@ const {
   editProduct,
   deleteProduct,
   viewProducts,
+  viewProduct,
 } = require("../controller/productController");
 const { sellerProtect } = require("../middleware/authMiddleware");
 const { allReviews } = require("../controller/reviewController");
@@ -17,6 +18,7 @@ router.post("/login", authSeller);
 router.post("/signup", registerSeller);
 
 // product routes
+router.get("/product/:productId", sellerProtect, viewProduct);
 router.get("/products", sellerProtect, viewProducts);
 router.post("/addproduct", sellerProtect, addProduct);
 router.put("/productupdate", sellerProtect, editProduct);

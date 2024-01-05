@@ -50,7 +50,14 @@ const Header = () => {
               <MdOutlineShoppingCart />
             </IconContext.Provider>
           </div>
-          <h3 className="font-medium sm:text-sm">OBAY</h3>
+          <motion.ui
+            initial={{ y: 30, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="flex items-center w-auto z-50 p-0 gap-2"
+          >
+            <h3 className="font-medium sm:text-sm">OBAY</h3>
+          </motion.ui>
         </div>
         <div className="searchBar flex justify-center items-center lg:w-2/5 md:w-2/5 sm:w-2/3">
           <FormControl

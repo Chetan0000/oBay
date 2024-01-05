@@ -1,119 +1,40 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import Slider from "react-slick";
+import React, { useEffect } from "react";
+import Banner from "../../components/home/Banner/Banner";
+import { Box } from "@chakra-ui/react";
+import { UserState } from "../../context/userContext";
+import NewArrivals from "../../components/home/NewArrivals/NewArrivals";
+import {
+  RemoveScrollBar,
+  noScrollbarsClassName,
+} from "react-remove-scroll-bar";
+<RemoveScrollBar />;
 
-const Banner = () => {
-  const [dotActive, setDocActive] = useState(0);
-  const settings = {
-    dots: true,
-    infinite: true,
-    autoplay: true,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    arrows: false,
-    beforeChange: (prev, next) => {
-      setDocActive(next);
-    },
-    appendDots: (dots) => (
-      <div
-        style={{
-          position: "absolute",
-          top: "50%",
-          left: "7%",
-          transform: "translateY(-50%)",
-        }}
-      >
-        <ul style={{ margin: "0px" }}> {dots} </ul>
-      </div>
-    ),
-    customPaging: (i) => (
-      <div
-        style={
-          i === dotActive
-            ? {
-                width: "30px",
-                color: "#262626",
-                borderRight: "3px #262626 solid",
-                padding: "8px 0",
-                cursor: "pointer",
-              }
-            : {
-                width: "30px",
-                color: "transparent",
-                borderRight: "3px white solid",
-                padding: "8px 0",
-                cursor: "pointer",
-              }
-        }
-      >
-        0{i + 1}
-      </div>
-    ),
-    responsive: [
-      {
-        breakpoint: 576,
-        settings: {
-          dots: true,
-          appendDots: (dots) => (
-            <div
-              style={{
-                position: "absolute",
-                top: "50%",
-                left: "2%",
-                transform: "translateY(-50%)",
-              }}
-            >
-              <ul style={{ margin: "0px" }}> {dots} </ul>
-            </div>
-          ),
-          customPaging: (i) => (
-            <div
-              style={
-                i === dotActive
-                  ? {
-                      width: "25px",
-                      color: "#262626",
-                      borderRight: "3px #262626 solid",
-                      cursor: "pointer",
-                      fontSize: "12px",
-                    }
-                  : {
-                      width: "25px",
-                      color: "transparent",
-                      borderRight: "3px white solid",
-                      cursor: "pointer",
-                      fontSize: "12px",
-                    }
-              }
-            >
-              0{i + 1}
-            </div>
-          ),
-        },
-      },
-    ],
-  };
+const Home = () => {
+  const { selectedItem, setSelectedItem } = UserState();
+  useEffect(() => {
+    console.log(selectedItem);
+  }, [selectedItem]);
+
   return (
-    <div className="w-full bg-white">
-      <Slider {...settings}>
-        <Link to="/offer">
-          <div>
-            <img src="" alt="" />
-          </div>
-        </Link>
-        <Link to="/offer">
-          <div>
-            <img src="" alt="" />
-          </div>
-        </Link>
-        <Link to="/offer">
-          <div>
-            <img src="" alt="" />
-          </div>
-        </Link>
-      </Slider>
-    </div>
+    <>
+      <Box
+        display={"flex"}
+        justifyContent={"center"}
+        flexDirection={"column"}
+        alignItems={"center"}
+        border={"2px solid red"}
+        overflow={"hidden"}
+      >
+        <Banner />
+
+        <div className="pt-[50px]">
+          <NewArrivals />
+        </div>
+
+        <Box h={"200px"}></Box>
+      </Box>
+    </>
   );
 };
 
-export default Banner;
+export default Home;

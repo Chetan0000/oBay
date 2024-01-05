@@ -7,6 +7,8 @@ const UserProvider = ({ children }) => {
   const [user, setUser] = useState();
   const [searchResults, setSearchResults] = useState([]);
   const [seller, setSeller] = useState();
+  const [selectedItem, setSelectedItem] = useState("");
+  const [sellerSelectedProduct, setSellerSelectedProduct] = useState("");
   const location = useNavigate();
 
   useEffect(() => {
@@ -23,8 +25,8 @@ const UserProvider = ({ children }) => {
     if (sellerInfo) {
       location("seller/dash");
       location("seller/dash");
-    } else {
-      location("/seller");
+      // window.location.reload();
+      // location("seller/dash");
     }
   }, []);
 
@@ -35,6 +37,10 @@ const UserProvider = ({ children }) => {
         seller,
         searchResults,
         setSearchResults,
+        sellerSelectedProduct,
+        setSellerSelectedProduct,
+        selectedItem,
+        setSelectedItem,
       }}
     >
       {children}

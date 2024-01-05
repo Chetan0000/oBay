@@ -1,8 +1,12 @@
 import { Box } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import AllProducts from "./AllProducts";
 const SellerDashBoard = () => {
+  useEffect(() => {
+    // window.location.reload();
+  }, []);
+
   return (
     <>
       <Box

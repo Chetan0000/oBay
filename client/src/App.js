@@ -11,7 +11,7 @@ import {
 
 import { UserState } from "./context/userContext";
 // import {} from "react";
-import homePage from "./pagse/homePage";
+
 import Header from "./components/home/Header/Header";
 import Home from "./pagse/Home/home";
 
@@ -23,16 +23,17 @@ import SellerDashBoard from "./seller-Dash/seller-dashboard/sellerDashBoard";
 import UserDash from "./UserDash";
 import SellerDash from "./SellerDash";
 import AddProduct from "./seller-Dash/seller-dashboard/AddProduct";
-
+import Profile from "./seller-Dash/seller-dashboard/Profile";
+import ViewProduct from "./seller-Dash/seller-dashboard/ViewProduct";
 const App = () => {
   const [isLogin, setLsLogin] = useState(false);
   const { user, seller } = UserState();
-  console.log("------------ ", seller);
+  // console.log("------------ ", seller);
   if (seller) {
   }
   return (
     <>
-      <div>
+      <div className="overflow-hidden">
         {/* {seller && window.location.pathname !== "/seller" ? (
           <SellerHeader />
         ) : (
@@ -47,12 +48,14 @@ const App = () => {
         <Routes>
           <Route path="/seller" element={<SellerPage />}></Route>
 
-          <Route path="/"></Route>
+          <Route path="/" element={<Home />}></Route>
 
           {/* ---------------------- seller Routes ------------------------ */}
 
           <Route path="/seller/dash" element={<SellerDashBoard />}></Route>
           <Route path="/seller/addProduct" element={<AddProduct />}></Route>
+          <Route path="/seller/profile" element={<Profile />}></Route>
+          {/* <Route path="/seller/view" element={<ViewProduct />}></Route> */}
         </Routes>
       </div>
     </>

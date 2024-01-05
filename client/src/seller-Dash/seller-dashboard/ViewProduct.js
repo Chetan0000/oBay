@@ -9,26 +9,66 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 import { IoMdArrowBack } from "react-icons/io";
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import { UserState } from "../../context/userContext";
 import axios from "axios";
-
-const AddProduct = () => {
-  const { seller } = UserState();
+import UseAnimations from "react-useanimations";
+import trash2 from "react-useanimations/lib/trash2";
+const ViewProduct = () => {
+  const { seller, setSellerSelectedProduct, sellerSelectedProduct } =
+    UserState();
 
   const location = useNavigate();
   const [loading, setLoading] = useState(false);
 
-  const [images, setImages] = useState("");
+  const [images, setImages] = useState();
   const [name, setName] = useState();
   const [price, setPrice] = useState();
   const [category, setCategory] = useState();
   const [stock, setStock] = useState();
   const [description, setDescription] = useState();
-  // back button function
+
+  // -------------- function to fetch all details of product by Id ------------------------
+
+  useEffect(() => {
+    fetchDetails();
+  }, []);
+
+  const fetchDetails = async () => {
+    if (!sellerSelectedProduct) {
+      return;
+    }
+    console.log(sellerSelectedProduct);
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${seller.token}`,
+        },
+      };
+      // console.log(seller.token);
+      const { data } = await axios.get(
+        `/seller/product/${sellerSelectedProduct}`,
+
+        config
+      );
+      console.log(data[0]);
+      setName(data[0].name);
+      setImages(data[0].images);
+      setCategory(data[0].category);
+      setDescription(data[0].description);
+      setPrice(data[0].price);
+      setStock(data[0].stock);
+    } catch (error) {
+      toast.error(error.response.data, {
+        duration: 3000,
+      });
+    }
+  };
+
+  //   ------------------------- update functions---------------------------------------
 
   const postDetails = async (pics) => {
     setLoading(true);
@@ -62,7 +102,7 @@ const AddProduct = () => {
   };
 
   // Function to add product
-  const submitHandler = async () => {
+  const updateButton = async () => {
     setLoading(true);
     if (!name || !price || !category || !description || !images) {
       toast("Please Fill all the fields", {
@@ -79,9 +119,10 @@ const AddProduct = () => {
         },
       };
       // console.log(seller.token);
-      const { data } = await axios.post(
-        "/seller/addproduct",
+      const { data } = await axios.put(
+        "/seller/productupdate",
         {
+          productId: sellerSelectedProduct,
           name: name,
           description: description,
           price: price,
@@ -92,22 +133,49 @@ const AddProduct = () => {
         config
       );
       setLoading(false);
-      toast.success("Item added successfully", {
+      toast.success("Item Updated successfully", {
         duration: 3000,
       });
-      alert("Item added successfully");
-      setImages("");
-      setName("");
-      setCategory("");
-      setDescription("");
-      setPrice("");
-      setStock("");
+      // alert("Item added successfully");
+      // setImages("");
+      // setName("");
+      // setCategory("");
+      // setDescription("");
+      // setPrice("");
+      // setStock("");
     } catch (error) {
       setLoading(false);
       toast.error(error.response.data, {
         duration: 3000,
       });
       return;
+    }
+  };
+
+  // ---------------- function to delete the product -----------------
+
+  const deleteButton = async () => {
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${seller.token}`,
+        },
+      };
+
+      const { data } = await axios.get(
+        `/seller/deleteProduct/${sellerSelectedProduct}`,
+        config
+      );
+      setLoading(false);
+      toast.success("Item deleted..!", {
+        duration: 3000,
+      });
+      setSellerSelectedProduct("");
+    } catch (error) {
+      setLoading(false);
+      toast.error(error.response.data, {
+        duration: 3000,
+      });
     }
   };
   return (
@@ -118,20 +186,28 @@ const AddProduct = () => {
       flexDirection={"column"}
       justifyContent={"center"}
       alignItems={"center"}
+      // paddingTop={{ base: "20px" }}
       // border={"1px solid red"}
     >
       <Box
-        width={"100%"}
-        display={{ base: "flex", md: "none", lg: "none" }}
+        width={"80%"}
+        display={"flex"}
         justifyContent={"flex-start"}
-        paddingY={"4px"}
-        paddingX={"10px"}
+        // paddingY={"4px"}
+        // paddingX={"10px"}
+        // marginTop={"-100px"}
+        // marginBottom={"100px"}
       >
-        <NavLink to={"/seller/dash"}>
+        <Box
+          cursor={"pointer"}
+          onClick={() => {
+            setSellerSelectedProduct("");
+          }}
+        >
           <IoMdArrowBack />
-        </NavLink>
+        </Box>
       </Box>
-      <div className="shadow-2xl sm:w-4/5 md:w-3/4 lg:w-3/6 sm:min-h-4/5 md:h-3/4 lg:h-3/4 flex-col justify-center">
+      <div className="shadow-2xl sm:w-4/5 md:w-[658px] lg:w-[756px] sm:min-h-4/5 md:h-3/4 lg:h-3/4 flex-col justify-center">
         <Box
           display={"flex"}
           flexDirection={{ base: "column", md: "row", lg: "row" }}
@@ -166,7 +242,7 @@ const AddProduct = () => {
                     h={{ base: "150px", md: "300px", lg: "300px" }}
                     // border={"1px solid black"}
                     onClick={() => {
-                      setImages();
+                      setImages("");
                     }}
                   >
                     <Image
@@ -220,7 +296,7 @@ const AddProduct = () => {
               <FormLabel>Price</FormLabel>
               <Input
                 value={price}
-                placeholder="0,000/"
+                placeholder="item"
                 type="number"
                 bg={"#EEEEEC"}
                 _focusVisible={{
@@ -241,7 +317,6 @@ const AddProduct = () => {
                 }}
               >
                 <option value="Appliances">Appliances</option>
-                <option value="Beauty products">Bags</option>
                 <option value="Beauty products">Beauty products</option>
                 <option value="Books">Books</option>
                 <option value="Clothing">Clothing</option>
@@ -282,7 +357,10 @@ const AddProduct = () => {
           width={"100%"}
           // border={"solid 1px black"}
           display={"flex"}
+          flexDirection={{ base: "row", md: "row", lg: "row" }}
           justifyContent={{ base: "center", md: "end", lg: "end" }}
+          alignItems={"center"}
+          gap={"20px"}
           padding={"10px"}
         >
           <Button
@@ -290,10 +368,21 @@ const AddProduct = () => {
             bg={"#262626"}
             _hover={{ bg: "black" }}
             color={"white"}
-            width={"170px"}
-            onClick={submitHandler}
+            width={{ base: "100px", md: "170px", lg: "170px" }}
+            onClick={deleteButton}
           >
-            Add
+            Delete
+            {/* <UseAnimations animation={trash2} size={56}  /> */}
+          </Button>
+          <Button
+            padding={"10px"}
+            bg={"#262626"}
+            _hover={{ bg: "black" }}
+            color={"white"}
+            width={{ base: "100px", md: "170px", lg: "170px" }}
+            onClick={updateButton}
+          >
+            update
           </Button>
           <Toaster position="top-center" reverseOrder={false} />
         </Box>
@@ -302,4 +391,4 @@ const AddProduct = () => {
   );
 };
 
-export default AddProduct;
+export default ViewProduct;

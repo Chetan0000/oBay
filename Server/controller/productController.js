@@ -83,4 +83,22 @@ const viewProducts = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { addProduct, editProduct, deleteProduct, viewProducts };
+// -------- view product details ------------------
+
+const viewProduct = asyncHandler(async (req, res) => {
+  const Id = req.params.productId;
+  try {
+    const data = await Product.find({ _id: Id });
+    res.status(200).json(data);
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+});
+
+module.exports = {
+  addProduct,
+  editProduct,
+  deleteProduct,
+  viewProducts,
+  viewProduct,
+};

@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  scrollbar-width: none;
 }
 
 .App-logo {
@@ -43,4 +44,13 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+/*-------------- Banner Css -------------- */
+.slick-slide img {
+  margin: auto;
+}
+
+li.slick-active > button::before {
+  color: red !important;
 }
