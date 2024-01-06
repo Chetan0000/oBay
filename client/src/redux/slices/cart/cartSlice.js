@@ -13,13 +13,13 @@ export const cartSlice = createSlice({
       );
 
       if (item) {
-        item.quantity += action.payload.quantity;
+        return;
       } else {
         state.products.push(action.payload);
       }
       console.log(state.products);
-      return;
     },
+    updateCart: (state, action) => {},
   },
 });
 

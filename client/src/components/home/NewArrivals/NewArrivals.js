@@ -24,9 +24,10 @@ import { FaCartPlus } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa";
 import Product from "../Product/Product";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCartSlice } from "../../../redux/slices/cart/cartSlice";
+// import { addToCartSlice } from "../../../redux/slices/cart/cartSlice";
+import { addItemsToCart } from "../../../actions/cartActions";
 const NewArrivals = () => {
-  const [products, setProducts] = useState([]);
+  const [products, setProducts, user] = useState([]);
   useEffect(() => {
     fetchData();
   }, []);
@@ -83,9 +84,9 @@ const NewArrivals = () => {
   const dispatch = useDispatch();
   const items = useSelector((state) => state.cart.products);
   const addToCart = (iD) => {
-    dispatch(addToCart());
-    console.log(items);
+    dispatch(addItemsToCart(iD, 1, user));
     console.log(iD);
+    console.log(items);
   };
 
   return (
@@ -112,6 +113,7 @@ const NewArrivals = () => {
           pb={"20px"}
         >
           New Arrivals
+          {items.length}
         </Text>
         <Box>
           <Slider {...settings}>
