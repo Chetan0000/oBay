@@ -15,7 +15,16 @@ import React, { Children } from "react";
 import { FaCartPlus } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa";
 import ReactStars from "react-rating-stars-component";
-const Product = ({ _id, image, name, price, rating, reviews, addToCart }) => {
+const Product = ({
+  _id,
+  image,
+  name,
+  price,
+  rating,
+  reviews,
+  addToCart,
+  addToWishList,
+}) => {
   return (
     <Box>
       <Card maxW="sm">
@@ -69,13 +78,41 @@ const Product = ({ _id, image, name, price, rating, reviews, addToCart }) => {
           // justifyContent={"center"}
           alignItems={"center"}
         >
-          <Box>
-            <Button variant="ghost" colorScheme="black" onClick={addToCart}>
-              <FaHeart />
+          <Box w={"100%"} display={"flex"} justifyContent={"space-between"}>
+            <Button
+              bg={"#2A2A2A"}
+              color={"white"}
+              _hover={{
+                bg: "#191919",
+              }}
+            >
+              Buy
             </Button>
-            <Button variant="ghost" colorScheme="black">
-              <FaCartPlus />
-            </Button>
+            <Box>
+              <Button
+                variant="ghost"
+                colorScheme="black"
+                onClick={addToWishList}
+                // color={"black"}
+                // fontSize={"20px"}
+                // _hover={{
+                //   color: "#191919",
+                // }}
+              >
+                <FaHeart />
+              </Button>
+              <Button
+                variant="ghost"
+                fontSize={"20px"}
+                colorScheme="black"
+                // _hover={{
+                //   color: "#191919",
+                // }}
+                onClick={addToCart}
+              >
+                <FaCartPlus />
+              </Button>
+            </Box>
           </Box>
           {/* <ButtonGroup spacing="2"></ButtonGroup> */}
         </CardFooter>

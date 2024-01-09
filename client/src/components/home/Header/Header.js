@@ -24,12 +24,23 @@ import { IconContext } from "react-icons";
 import { IoIosSearch } from "react-icons/io";
 import { HiMenuAlt2 } from "react-icons/hi";
 import { motion } from "framer-motion";
+import { FaCartShopping } from "react-icons/fa6";
+import { FaHeart } from "react-icons/fa";
+import { RiAccountCircleFill } from "react-icons/ri";
 
+// redux----
+
+import { useDispatch, useSelector } from "react-redux";
+import { addItemsToCart } from "../../../actions/cartActions";
+import { addItemsToWishList } from "../../../actions/wishListAction";
 const Header = () => {
   const { user, searchResults, setSearchResults } = UserState();
   const location = useLocation();
   const [search, setSearch] = useState();
-
+  // globule states
+  const CartItems = useSelector((state) => state.cart.products);
+  const wishItems = useSelector((state) => state.wishList.products);
+  //----------- logics
   const searchHandel = (query) => {};
 
   return (
@@ -101,28 +112,41 @@ const Header = () => {
             className="flex items-center w-auto z-50 p-0 gap-2"
           >
             <NavLink
-              className="flex font-normal hover:font-bold w-20 h-6 justify-center items-center px-12 text-base text-[#767676] hover:underline underline-offset-[4px] decoration-[1px] hover:text-[#262626] md:border-r-[2px] border-r-gray-300 hoverEffect last:border-r-0"
-              state={{ data: location.pathname.split("/")[1] }}
+              className="flex font-normal hover:font-bold w-20 h-6 justify-center items-center px-8 text-base text-[#767676] hover:underline underline-offset-[4px] decoration-[1px] hover:text-[#262626] md:border-r-[2px] border-r-gray-300 hoverEffect last:border-r-0"
+              to={"/"}
             >
               <p>Home</p>
             </NavLink>
             <NavLink
-              className="flex font-normal hover:font-bold w-20 h-6 justify-center items-center px-12 text-base text-[#767676] hover:underline underline-offset-[4px] decoration-[1px] hover:text-[#262626] md:border-r-[2px] border-r-gray-300 hoverEffect last:border-r-0"
-              state={{ data: location.pathname.split("/")[1] }}
+              className="flex font-normal hover:font-bold w-[20px] h-6 justify-center items-center px-8 text-base text-[#767676] hover:underline underline-offset-[4px] decoration-[1px] hover:text-[#262626] md:border-r-[2px] border-r-gray-300 hoverEffect last:border-r-0"
+              to={"/wishList"}
             >
-              <p>Category</p>
+              <span className="wishList">
+                <FaHeart size={"1.2rem"} />
+              </span>
+              <span className="mt-[-20px]">
+                {wishItems.length > 0 ? <>{wishItems.length}</> : <></>}
+              </span>
+            </NavLink>
+
+            <NavLink
+              className="flex font-normal hover:font-bold w-[20px] h-6 justify-center items-center px-8 text-base text-[#767676] hover:underline underline-offset-[4px] decoration-[1px] hover:text-[#262626] md:border-r-[2px] border-r-gray-300 hoverEffect last:border-r-0"
+              to={"/cart"}
+            >
+              <span className="cart">
+                <FaCartShopping size={"1.2rem"} />
+              </span>
+              <span className="mt-[-20px]">
+                {CartItems.length > 0 ? <>{CartItems.length}</> : <></>}
+              </span>
             </NavLink>
             <NavLink
-              className="flex font-normal hover:font-bold w-20 h-6 justify-center items-center px-12 text-base text-[#767676] hover:underline underline-offset-[4px] decoration-[1px] hover:text-[#262626] md:border-r-[2px] border-r-gray-300 hoverEffect last:border-r-0"
+              className="flex font-normal hover:font-bold w-[20px]] h-6 justify-center items-center px-8 text-base text-[#767676] hover:underline underline-offset-[4px] decoration-[1px] hover:text-[#262626] md:border-r-[2px] border-r-gray-300 hoverEffect last:border-r-0"
               state={{ data: location.pathname.split("/")[1] }}
             >
-              <p>Profile</p>
-            </NavLink>
-            <NavLink
-              className="flex font-normal hover:font-bold w-20 h-6 justify-center items-center px-12 text-base text-[#767676] hover:underline underline-offset-[4px] decoration-[1px] hover:text-[#262626] md:border-r-[2px] border-r-gray-300 hoverEffect last:border-r-0"
-              state={{ data: location.pathname.split("/")[1] }}
-            >
-              <p>Cart</p>
+              <span className="profile">
+                <RiAccountCircleFill size={"1.5rem"} />
+              </span>
             </NavLink>
           </motion.ui>
         </Box>
@@ -141,6 +165,10 @@ const Header = () => {
 
               <MenuItem bg={"#262626"}>
                 <Link to="/cart">Cart</Link>
+              </MenuItem>
+              <MenuDivider />
+              <MenuItem bg={"#262626"}>
+                <Link to="/wishList">WishList</Link>
               </MenuItem>
               <MenuDivider />
               <MenuItem bg={"#262626"}>

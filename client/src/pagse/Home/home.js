@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import Banner from "../../components/home/Banner/Banner";
+import BannerBottom from "../../components/home/Banner/BannerBottom";
 import { Box } from "@chakra-ui/react";
 import { UserState } from "../../context/userContext";
 import NewArrivals from "../../components/home/NewArrivals/NewArrivals";
@@ -26,7 +27,7 @@ const Home = () => {
         overflow={"hidden"}
       >
         <Banner />
-
+        <BannerBottom />
         <div className="pt-[50px]">
           <NewArrivals />
         </div>

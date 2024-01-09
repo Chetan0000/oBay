@@ -14,6 +14,7 @@ import { UserState } from "./context/userContext";
 
 import Header from "./components/home/Header/Header";
 import Home from "./pagse/Home/home";
+import Cart from "./pagse/Cart/Cart";
 
 // ------seller components -----------
 
@@ -25,6 +26,7 @@ import SellerDash from "./SellerDash";
 import AddProduct from "./seller-Dash/seller-dashboard/AddProduct";
 import Profile from "./seller-Dash/seller-dashboard/Profile";
 import ViewProduct from "./seller-Dash/seller-dashboard/ViewProduct";
+
 const App = () => {
   const [isLogin, setLsLogin] = useState(false);
   const { user, seller } = UserState();
@@ -33,7 +35,7 @@ const App = () => {
   }
   return (
     <>
-      <div className="overflow-hidden">
+      <div>
         {/* {seller && window.location.pathname !== "/seller" ? (
           <SellerHeader />
         ) : (
@@ -49,6 +51,7 @@ const App = () => {
           <Route path="/seller" element={<SellerPage />}></Route>
 
           <Route path="/" element={<Home />}></Route>
+          <Route path="/cart" element={<Cart />}></Route>
 
           {/* ---------------------- seller Routes ------------------------ */}
 

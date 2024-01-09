@@ -8,16 +8,19 @@ export const wishListSlice = createSlice({
   name: "wishList",
   initialState,
   reducers: {
-    addToWish: (state, action) => {
+    addToWishListSlice: (state, action) => {
       const item = state.products.find(
-        (item) => item._id === action.payload._id
+        (item) => item.product._id === action.payload.product._id
       );
-      if (!item) {
+      if (item) {
+        return;
+      } else {
         state.products.push(action.payload);
       }
+      console.log();
     },
   },
 });
 
-export const { addToWish } = wishListSlice.actions;
+export const { addToWishListSlice } = wishListSlice.actions;
 export default wishListSlice.reducer;

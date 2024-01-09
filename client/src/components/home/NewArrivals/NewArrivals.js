@@ -26,6 +26,7 @@ import Product from "../Product/Product";
 import { useDispatch, useSelector } from "react-redux";
 // import { addToCartSlice } from "../../../redux/slices/cart/cartSlice";
 import { addItemsToCart } from "../../../actions/cartActions";
+import { addItemsToWishList } from "../../../actions/wishListAction";
 const NewArrivals = () => {
   const [products, setProducts, user] = useState([]);
   useEffect(() => {
@@ -83,10 +84,16 @@ const NewArrivals = () => {
   // ----------- Business logic functions -----------------
   const dispatch = useDispatch();
   const items = useSelector((state) => state.cart.products);
-  const addToCart = (iD) => {
-    dispatch(addItemsToCart(iD, 1, user));
-    console.log(iD);
-    console.log(items);
+  const wishItems = useSelector((state) => state.wishList.products);
+  const addToCart = (product) => {
+    dispatch(addItemsToCart(product, 1, user));
+    // console.log(product);
+    // console.log(items);
+  };
+
+  const addToWishList = (product) => {
+    dispatch(addItemsToWishList(product, user));
+    // console.log(wishItems);
   };
 
   return (
@@ -107,13 +114,15 @@ const NewArrivals = () => {
         }}
       >
         <Text
-          fontSize={{ base: "30px", md: "35px", lg: "40px" }}
+          fontSize={{ base: "25px", md: "30px", lg: "35px" }}
           fontWeight={"bold"}
+          fontFamily={"DM Sans"}
           pt={"20px"}
           pb={"20px"}
+          color={"black"}
         >
           New Arrivals
-          {items.length}
+          {console.log(items)}
         </Text>
         <Box>
           <Slider {...settings}>
@@ -133,7 +142,10 @@ const NewArrivals = () => {
                     rating={product.ratings}
                     reviews={product.reviews}
                     addToCart={(e) => {
-                      addToCart(product._id);
+                      addToCart(product);
+                    }}
+                    addToWishList={(e) => {
+                      addToWishList(product);
                     }}
                   />
                 </Box>
