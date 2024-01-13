@@ -7,6 +7,9 @@ const {
   updateCart,
   viewCart,
   deleteCart,
+  addAddress,
+  updateAddress,
+  viewAddress,
 } = require("../controller/userController");
 const { userProtect } = require("../middleware/authMiddleware");
 const {
@@ -31,6 +34,10 @@ router.get("/wishlist", userProtect, viewWishList);
 router.post("/addwishlist", userProtect, addWishList);
 router.put("/deletewatchlist", userProtect, deleteFromWatchList);
 
+// Address
+router.get("/address", userProtect, viewAddress);
+router.post("/addAddress", userProtect, addAddress);
+router.put("/updateAddress", userProtect, updateAddress);
 // review routes
 router.post("/addreview", userProtect, addReview);
 

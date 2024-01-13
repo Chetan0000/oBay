@@ -19,7 +19,7 @@ import {
   Button,
   MenuDivider,
 } from "@chakra-ui/react";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { IconContext } from "react-icons";
 import { IoIosSearch } from "react-icons/io";
 import { HiMenuAlt2 } from "react-icons/hi";
@@ -33,14 +33,27 @@ import { RiAccountCircleFill } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import { addItemsToCart } from "../../../actions/cartActions";
 import { addItemsToWishList } from "../../../actions/wishListAction";
+
 const Header = () => {
-  const { user, searchResults, setSearchResults } = UserState();
-  const location = useLocation();
+  // const { user, searchResults, setSearchResults } = UserState();
+  const userData = useSelector((state) => state.user.user);
+  const navigate = useNavigate();
   const [search, setSearch] = useState();
   // globule states
   const CartItems = useSelector((state) => state.cart.products);
   const wishItems = useSelector((state) => state.wishList.products);
   //----------- logics
+
+  const handelCLick = () => {
+    // console.log("form header -", userData.length);
+    if (userData != 0) {
+      // console.log("form header if -", userData);
+      navigate("/user/profile");
+    } else {
+      // console.log("form header else -", userData);
+      navigate("/user");
+    }
+  };
   const searchHandel = (query) => {};
 
   return (
@@ -140,14 +153,16 @@ const Header = () => {
                 {CartItems.length > 0 ? <>{CartItems.length}</> : <></>}
               </span>
             </NavLink>
-            <NavLink
+            <Box
               className="flex font-normal hover:font-bold w-[20px]] h-6 justify-center items-center px-8 text-base text-[#767676] hover:underline underline-offset-[4px] decoration-[1px] hover:text-[#262626] md:border-r-[2px] border-r-gray-300 hoverEffect last:border-r-0"
-              state={{ data: location.pathname.split("/")[1] }}
+              onClick={() => {
+                handelCLick();
+              }}
             >
               <span className="profile">
                 <RiAccountCircleFill size={"1.5rem"} />
               </span>
-            </NavLink>
+            </Box>
           </motion.ui>
         </Box>
 
@@ -172,7 +187,13 @@ const Header = () => {
               </MenuItem>
               <MenuDivider />
               <MenuItem bg={"#262626"}>
-                <Link to="/profile">Profile</Link>
+                <Box
+                  onClick={() => {
+                    handelCLick();
+                  }}
+                >
+                  Profile
+                </Box>
               </MenuItem>
             </MenuList>
           </Menu>

@@ -2,6 +2,7 @@ const User = require("../models/userModel");
 const asyncHandler = require("express-async-handler");
 const generateToken = require("../config/generateToken");
 const Cart = require("../models/cartModel");
+const Address = require("../models/address");
 
 // ------------- user SIgn up -----------------------
 const registerUser = asyncHandler(async (req, res) => {
@@ -9,8 +10,7 @@ const registerUser = asyncHandler(async (req, res) => {
   console.log(req.body);
   if (!name || !password || !email) {
     console.log(name, email, password);
-    res.status(400);
-    throw new Error(`Please Enter all the Felids`);
+    return res.status(400).send(`Please fill all the fields`);
   }
 
   const userExist = await User.findOne({ email });
@@ -34,12 +34,11 @@ const registerUser = asyncHandler(async (req, res) => {
       token: generateToken(user._id),
     });
   } else {
-    res.status(400);
-    throw new Error(`Failed to create User Try again later...${error.message}`);
+    return res.status(400).send(`Failed to create Seller try again later`);
   }
 });
 
-// ------------------User SIgn UP function--------------------
+// ------------------User SIgn in function--------------------
 const authUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
   console.log(email, password);
@@ -56,8 +55,7 @@ const authUser = asyncHandler(async (req, res) => {
     console.log(user);
   } else {
     console.log("Error");
-    res.status(400);
-    throw new Error(`Invalid Email or Password`);
+    return res.status(400).send("Invalid email or password");
   }
 });
 
@@ -66,6 +64,7 @@ const authUser = asyncHandler(async (req, res) => {
 // function to view cart items
 
 const viewCart = asyncHandler(async (req, res) => {
+  console.log(req.user._id);
   try {
     let data = await Cart.find({ user: req.user._id })
       .populate("user", "name email")
@@ -74,8 +73,7 @@ const viewCart = asyncHandler(async (req, res) => {
 
     res.status(200).json(data);
   } catch (error) {
-    res.status(400);
-    throw new Error(`Error in fetching cart items :- ${error.message}`);
+    res.status(400).send(error.message);
   }
 });
 
@@ -95,7 +93,12 @@ const addTOCart = asyncHandler(async (req, res) => {
     return;
   }
   try {
-    const data = await Cart.create(obj);
+    const data = await Cart.create({
+      user: req.user._id,
+      item: productId,
+      count: count,
+    });
+    console.log(req.user._id);
     res.status(200).json(data);
   } catch (error) {
     res.status(400);
@@ -107,6 +110,21 @@ const addTOCart = asyncHandler(async (req, res) => {
 const updateCart = asyncHandler(async (req, res) => {
   const { cartId, count } = req.body;
   const id = req.user._id;
+
+  try {
+    const data = await Cart.findByIdAndUpdate(
+      { _id: cartId },
+      { count: count },
+      {
+        new: true,
+        upsert: true,
+      }
+    );
+    res.status(200).send(data);
+  } catch (error) {
+    console.log(error.message);
+    res.status(400).send(error.message);
+  }
 });
 
 // Function to delete item from cart
@@ -114,11 +132,100 @@ const deleteCart = asyncHandler(async (req, res) => {
   const { cartId } = req.body;
 
   try {
-    const data = await Cart.findByIdAndDelete(cartId);
+    const data = await Cart.findByIdAndDelete(
+      { _id: cartId },
+      {
+        new: true,
+        upsert: true,
+      }
+    );
     res.status(200).json(data);
   } catch (error) {
     res.status(400);
     throw new Error(`Error in Deleting item from Cart :- ${error.message}`);
+  }
+});
+
+// Function to add Address
+
+const addAddress = asyncHandler(async (req, res) => {
+  const {
+    name,
+    mobileNumber,
+    pinCode,
+    address,
+    cityDistrictTown,
+    state,
+    landmark,
+    alternatePhone,
+  } = req.body;
+  try {
+    const data = await Address.create({
+      user: req.user._id,
+      name,
+      mobileNumber,
+      pinCode,
+      address,
+      cityDistrictTown,
+      state,
+      landmark,
+      alternatePhone,
+    });
+    res.status(200).send(data);
+  } catch (error) {
+    console.log(error);
+    res.status(400).send(error.message);
+  }
+});
+
+// FUnction to update Address
+
+const updateAddress = asyncHandler(async (req, res) => {
+  const {
+    iD,
+    name,
+    mobileNumber,
+    pinCode,
+    address,
+    cityDistrictTown,
+    state,
+    landmark,
+    alternatePhone,
+  } = req.body;
+
+  try {
+    const data = await Address.findByIdAndUpdate(
+      { _id: iD },
+      {
+        name,
+        mobileNumber,
+        pinCode,
+        address,
+        cityDistrictTown,
+        state,
+        landmark,
+        alternatePhone,
+      },
+      {
+        new: true,
+        upsert: true,
+      }
+    );
+    res.status(200).send(data);
+  } catch (error) {
+    console.log(error.message);
+    res.status(400).send(error.message);
+  }
+});
+
+// function to view Address
+const viewAddress = asyncHandler(async (req, res) => {
+  console.log(req.user._id);
+  try {
+    const data = await Address.find({ user: req.user._id });
+    res.status(200).send(data);
+  } catch (error) {
+    res.status(400).send(error);
   }
 });
 
@@ -129,4 +236,7 @@ module.exports = {
   updateCart,
   viewCart,
   deleteCart,
+  addAddress,
+  updateAddress,
+  viewAddress,
 };

@@ -1,13 +1,14 @@
 import React, { useEffect } from "react";
 import Banner from "../../components/home/Banner/Banner";
 import BannerBottom from "../../components/home/Banner/BannerBottom";
-import { Box } from "@chakra-ui/react";
+import { Box, Stat } from "@chakra-ui/react";
 import { UserState } from "../../context/userContext";
 import NewArrivals from "../../components/home/NewArrivals/NewArrivals";
 import {
   RemoveScrollBar,
   noScrollbarsClassName,
 } from "react-remove-scroll-bar";
+import { useDispatch, useSelector } from "react-redux";
 <RemoveScrollBar />;
 
 const Home = () => {
@@ -15,7 +16,8 @@ const Home = () => {
   useEffect(() => {
     console.log(selectedItem);
   }, [selectedItem]);
-
+  const user = useSelector((state) => state.user.user);
+  console.log("from home .js ", user);
   return (
     <>
       <Box

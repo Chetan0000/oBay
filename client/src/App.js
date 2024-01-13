@@ -15,16 +15,19 @@ import { UserState } from "./context/userContext";
 import Header from "./components/home/Header/Header";
 import Home from "./pagse/Home/home";
 import Cart from "./pagse/Cart/Cart";
-
+import UserPage from "./pagse/userPage/UserPage";
+import WIshListPage from "./pagse/WIshLIst/WIshListPage";
+import UserProfile from "./pagse/Profile/UserProfile";
 // ------seller components -----------
 
 import SellerPage from "./pagse/SellerPage/sellerPage";
 import SellerHeader from "./seller-Dash/Seller_Header/header";
 import SellerDashBoard from "./seller-Dash/seller-dashboard/sellerDashBoard";
-import UserDash from "./UserDash";
-import SellerDash from "./SellerDash";
+
 import AddProduct from "./seller-Dash/seller-dashboard/AddProduct";
 import Profile from "./seller-Dash/seller-dashboard/Profile";
+import EditUser from "./components/UserProfile/EditUser";
+import UserAddress from "./components/UserProfile/UserAddress";
 import ViewProduct from "./seller-Dash/seller-dashboard/ViewProduct";
 
 const App = () => {
@@ -51,7 +54,12 @@ const App = () => {
           <Route path="/seller" element={<SellerPage />}></Route>
 
           <Route path="/" element={<Home />}></Route>
+          <Route path="/user" element={<UserPage />}></Route>
           <Route path="/cart" element={<Cart />}></Route>
+          <Route path="/wishList" element={<WIshListPage />}></Route>
+          <Route path="/user/profile" element={<UserProfile />}></Route>
+          <Route path="/user/profile/editUser" element={<EditUser />}></Route>
+          <Route path="/user/profile/address" element={<UserAddress />}></Route>
 
           {/* ---------------------- seller Routes ------------------------ */}
 

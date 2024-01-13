@@ -39,12 +39,17 @@ const deleteFromWatchList = asyncHandler(async (req, res) => {
   const { listId } = req.body;
 
   try {
-    let data = await WishList.findByIdAndDelete(listId);
+    let data = await WishList.findByIdAndDelete(
+      { _id: listId },
+      {
+        new: true,
+        upsert: true,
+      }
+    );
     data = { message: "Item deleted form wish List", ...data };
     res.status(200).json(data);
   } catch (error) {
-    res.status(400);
-    throw new Error(`Error in deleting item from WishList :- ${error.message}`);
+    res.status(400).send(error.message);
   }
 });
 module.exports = { addWishList, deleteFromWatchList, viewWishList };

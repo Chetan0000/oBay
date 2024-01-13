@@ -40,8 +40,8 @@ export const increaseQuantity =
     if (user) {
       // ----- update in DB using API
       // first load all the cart items for this user as "data"
-      // run through the "data" => (pro) and compar "product._id" with "pro.item" and take that "pro._id" 
-      // and update "pro._id"'s quantity 
+      // run through the "data" => (pro) and compar "product._id" with "pro.item" and take that "pro._id"
+      // and update "pro._id"'s quantity
     } else {
       dispatch(increaseQuantitySlice({ product }));
     }
@@ -56,7 +56,7 @@ export const decreaseItem =
     if (user) {
       // ----- API call -------
       // first load all the cart items for this user as "data"
-      // run through the "data" => (pro) and compar "product._id" with "pro.item" and take that "pro._id" 
+      // run through the "data" => (pro) and compar "product._id" with "pro.item" and take that "pro._id"
       // and then decrease the quantity of the item "pro._id"
     } else {
       dispatch(decreaseQuantitySlice({ product, quantity }));
