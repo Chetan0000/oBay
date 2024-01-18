@@ -1,7 +1,7 @@
 import React from "react";
 
 const WIshListPage = () => {
-  return <div>WIshListPage</div>;
+  return <>WishList</>;
 };
 
 export default WIshListPage;

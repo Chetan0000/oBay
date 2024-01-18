@@ -29,7 +29,7 @@ const Login = () => {
   };
 
   // ============ submit/sign in button function =====================\\
-
+  const cartItems = useSelector((state) => state.cart.products);
   const submitHandler = async () => {
     setLoading(true);
     if (!email || !password) {
@@ -53,6 +53,8 @@ const Login = () => {
       // console.log("data");
       // localStorage.setItem("userInfo", JSON.stringify(data));
       dispatch(setUserData(data));
+
+      console.log("check of cart data after loging in    ", cartItems);
       // console.log(localStorage.getItem("sellerInfo"));
       toast.success("Logged in Successfully ", {
         duration: 3000,
@@ -67,6 +69,7 @@ const Login = () => {
       });
     }
   };
+
   return (
     <Box
       className="check"
@@ -153,7 +156,7 @@ const Login = () => {
               color={"white"}
               width={"100%"}
               onClick={() => {
-                setEmail("testSeller@gmail.com");
+                setEmail("test101@gmail.com");
                 setPassword("123456");
               }}
             >

@@ -28,8 +28,10 @@ import AddProduct from "./seller-Dash/seller-dashboard/AddProduct";
 import Profile from "./seller-Dash/seller-dashboard/Profile";
 import EditUser from "./components/UserProfile/EditUser";
 import UserAddress from "./components/UserProfile/UserAddress";
-import ViewProduct from "./seller-Dash/seller-dashboard/ViewProduct";
+import ViewProductDetails from "./pagse/ViewProduct/ViewProductDetails";
 
+// ------Contact Me page -----------
+import ContactMe from "./pagse/ContactMe/ContactMe";
 const App = () => {
   const [isLogin, setLsLogin] = useState(false);
   const { user, seller } = UserState();
@@ -47,7 +49,8 @@ const App = () => {
           </>
         )} */}
         {window.location.pathname === "/seller" ||
-        window.location.pathname === "/user" ? null : (
+        window.location.pathname === "/user" ||
+        window.location.pathname === "/contactMe" ? null : (
           <>{(seller && <SellerHeader />) || <Header />}</>
         )}
         <Routes>
@@ -56,10 +59,17 @@ const App = () => {
           <Route path="/" element={<Home />}></Route>
           <Route path="/user" element={<UserPage />}></Route>
           <Route path="/cart" element={<Cart />}></Route>
-          <Route path="/wishList" element={<WIshListPage />}></Route>
+          {/* <Route path="/wishList" element={<WIshListPage />}></Route> */}
           <Route path="/user/profile" element={<UserProfile />}></Route>
           <Route path="/user/profile/editUser" element={<EditUser />}></Route>
           <Route path="/user/profile/address" element={<UserAddress />}></Route>
+          {/* ----------------- Product Routes ----------------- */}
+
+          <Route path="/view/product" element={<ViewProductDetails />}></Route>
+
+          {/*-------------------- Contact Me Router ----------------  */}
+          <Route path="/contactMe" element={<ContactMe />}></Route>
+          {/* --------------------------------------------------------- */}
 
           {/* ---------------------- seller Routes ------------------------ */}
 

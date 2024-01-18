@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   products: [],
+  totalPrice: 0,
 };
 export const cartSlice = createSlice({
   name: "cart",
@@ -9,7 +10,7 @@ export const cartSlice = createSlice({
   reducers: {
     addToCartSlice: (state, action) => {
       const item = state.products.find(
-        (item) => item.product._id === action.payload.product._id
+        (item) => item._id === action.payload._id
       );
 
       if (item) {
@@ -17,32 +18,41 @@ export const cartSlice = createSlice({
       } else {
         state.products.push(action.payload);
       }
-      console.log(state.products, " --- ");
+      // console.log(state.products, " --- ");
+      // state.products.push(action.payload);
     },
     increaseQuantitySlice: (state, action) => {
       const idx = state.products.findIndex((item) => {
-        return item.product._id === action.payload.product._id;
+        return item._id === action.payload._id;
       });
 
       if (idx >= 0) {
-        state.products[idx].quantity += 1;
+        state.products[idx] = action.payload;
       } else {
         return;
       }
     },
     decreaseQuantitySlice: (state, action) => {
       const idx = state.products.findIndex((item) => {
-        return item.product._id === action.payload.product._id;
+        return item._id === action.payload._id;
       });
       if (idx >= 0) {
-        state.products[idx].quantity -= 1;
+        state.products[idx] = action.payload;
+      } else {
+        return;
       }
     },
     deleteItemSlice: (state, action) => {
       const idx = state.products.findIndex((item) => {
-        return item.product._id === action.payload.product._id;
+        return item._id === action.payload._id;
       });
-      state.products.slice(idx, 1);
+      state.products.splice(idx, 1);
+    },
+    clearCartSlice: (state, action) => {
+      state.products = [];
+    },
+    setTotalPrice: (state, action) => {
+      state.totalPrice = action.payload;
     },
   },
 });
@@ -52,5 +62,7 @@ export const {
   increaseQuantitySlice,
   decreaseQuantitySlice,
   deleteItemSlice,
+  clearCartSlice,
+  setTotalPrice,
 } = cartSlice.actions;
 export default cartSlice.reducer;

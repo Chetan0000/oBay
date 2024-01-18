@@ -9,6 +9,7 @@ import {
   noScrollbarsClassName,
 } from "react-remove-scroll-bar";
 import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
 <RemoveScrollBar />;
 
 const Home = () => {
@@ -17,7 +18,10 @@ const Home = () => {
     console.log(selectedItem);
   }, [selectedItem]);
   const user = useSelector((state) => state.user.user);
+  const cartItems = useSelector((state) => state.cart.products);
   console.log("from home .js ", user);
+  console.log("from home .js cart items ", cartItems);
+
   return (
     <>
       <Box

@@ -155,6 +155,7 @@ const UserProfile = () => {
           {/* ------------------ next ------------------ */}
           <Box
             display={"flex"}
+            // border={"1px solid black"}
             flexDirection={{ base: "column", md: "row", lg: "row" }}
             justifyContent={{
               base: "center",
@@ -194,41 +195,6 @@ const UserProfile = () => {
               </Box>
             </Box>
 
-            {/* -----------  WIshList -------------- */}
-            <Box
-              w={{ base: "80%", md: "30%", lg: "30%" }}
-              h={"100px"}
-              border={"1px solid #d6d6d6"}
-              borderRadius={"10px"}
-              display={"flex"}
-              justifyContent={"center"}
-              alignItems={"center"}
-              cursor={"pointer"}
-              _hover={{
-                bg: "#eeeeee",
-                transitionDuration: "0.2s",
-                transitionTimingFunction: "ease-in-out",
-              }}
-              onClick={() => {
-                navigate("/wishList");
-              }}
-            >
-              <Box h={"80%"} w={"100px"} objectFit={"cover"}>
-                <Image
-                  src="https://res.cloudinary.com/dlek1smmu/image/upload/v1704905669/bd6cc8c0df3d008c821fe141ef47c2e8_sozot4.png"
-                  h={"80%"}
-                  w={"90%"}
-                  m={"auto"}
-                ></Image>
-              </Box>
-              <Box>
-                <Text fontSize={"17px"}> Wish List</Text>
-                <Text fontSize={"14px"}>
-                  {" "}
-                  Edit wishList, Buy, and delete item
-                </Text>
-              </Box>
-            </Box>
             {/* ----------------------- Contact Us ------------ */}
             <Box
               w={{ base: "80%", md: "30%", lg: "30%" }}
@@ -244,6 +210,9 @@ const UserProfile = () => {
                 transitionDuration: "0.2s",
                 transitionTimingFunction: "ease-in-out",
               }}
+              onClick={() => {
+                navigate("/contactMe");
+              }}
             >
               <Box
                 h={"80%"}
@@ -258,6 +227,41 @@ const UserProfile = () => {
                 <Text fontSize={"17px"}> Contact us</Text>
                 {/* <Text fontSize={"14px"}></Text> */}
               </Box>
+            </Box>
+            {/* -----------  WIshList -------------- */}
+            <Box
+              w={{ base: "80%", md: "30%", lg: "30%" }}
+              h={"100px"}
+              border={"1px solid white"}
+              borderRadius={"10px"}
+              display={{ base: "none", md: "flex", lg: "flex" }}
+              justifyContent={"center"}
+              alignItems={"center"}
+              // cursor={"pointer"}
+              _hover={{
+                bg: "#eeeeee",
+                transitionDuration: "0.2s",
+                transitionTimingFunction: "ease-in-out",
+              }}
+              // onClick={() => {
+              //   navigate("/wishList");
+              // }}
+            >
+              {/* <Box h={"80%"} w={"100px"} objectFit={"cover"}>
+                <Image
+                  src="https://res.cloudinary.com/dlek1smmu/image/upload/v1704905669/bd6cc8c0df3d008c821fe141ef47c2e8_sozot4.png"
+                  h={"80%"}
+                  w={"90%"}
+                  m={"auto"}
+                ></Image>
+              </Box>
+              <Box>
+                <Text fontSize={"17px"}> Wish List</Text>
+                <Text fontSize={"14px"}>
+                  {" "}
+                  Edit wishList, Buy, and delete item
+                </Text>
+              </Box> */}
             </Box>
             <Box></Box>
           </Box>

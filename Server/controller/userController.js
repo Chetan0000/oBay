@@ -89,7 +89,7 @@ const addTOCart = asyncHandler(async (req, res) => {
   const isExist = await Cart.find({ user: req.user._id, item: productId });
   console.log(isExist);
   if (isExist.length > 0) {
-    res.status(200).json("Item Exist");
+    res.status(400).send("Item Exist");
     return;
   }
   try {
@@ -99,7 +99,11 @@ const addTOCart = asyncHandler(async (req, res) => {
       count: count,
     });
     console.log(req.user._id);
-    res.status(200).json(data);
+    let newData = await Cart.find({ _id: data._id })
+      .populate("user", "name email")
+      .populate("item")
+      .populate("seller", "name email");
+    res.status(200).json(newData);
   } catch (error) {
     res.status(400);
     throw new Error(`Error in adding item to cart :- ${error.message}`);
@@ -119,7 +123,10 @@ const updateCart = asyncHandler(async (req, res) => {
         new: true,
         upsert: true,
       }
-    );
+    )
+      .populate("user", "name email")
+      .populate("item")
+      .populate("seller", "name email");
     res.status(200).send(data);
   } catch (error) {
     console.log(error.message);
@@ -143,6 +150,17 @@ const deleteCart = asyncHandler(async (req, res) => {
   } catch (error) {
     res.status(400);
     throw new Error(`Error in Deleting item from Cart :- ${error.message}`);
+  }
+});
+
+// ---------- function to reset cart -----------
+
+const resetCart = asyncHandler(async (req, res) => {
+  try {
+    const data = await Cart.deleteMany({ user: req.user._id });
+    res.status(200).send("Cart has been reseated");
+  } catch (error) {
+    res.status(400).send(error.message);
   }
 });
 
@@ -236,6 +254,7 @@ module.exports = {
   updateCart,
   viewCart,
   deleteCart,
+  resetCart,
   addAddress,
   updateAddress,
   viewAddress,

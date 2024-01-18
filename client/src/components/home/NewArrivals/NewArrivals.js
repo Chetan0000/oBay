@@ -28,7 +28,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addItemsToCart } from "../../../actions/cartActions";
 import { addItemsToWishList } from "../../../actions/wishListAction";
 const NewArrivals = () => {
-  const [products, setProducts, user] = useState([]);
+  const [products, setProducts] = useState([]);
   useEffect(() => {
     fetchData();
   }, []);
@@ -82,6 +82,7 @@ const NewArrivals = () => {
   };
 
   // ----------- Business logic functions -----------------
+  const user = useSelector((state) => state.user.user);
   const dispatch = useDispatch();
   const items = useSelector((state) => state.cart.products);
   const wishItems = useSelector((state) => state.wishList.products);
@@ -138,9 +139,13 @@ const NewArrivals = () => {
                     _id={product._id}
                     image={product.images}
                     name={product.name}
+                    description={product.description}
+                    category={product.category}
                     price={product.price}
+                    stock={product.stock}
                     rating={product.ratings}
                     reviews={product.reviews}
+                    seller={product.seller}
                     addToCart={(e) => {
                       addToCart(product);
                     }}

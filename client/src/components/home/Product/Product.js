@@ -15,18 +15,42 @@ import React, { Children } from "react";
 import { FaCartPlus } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa";
 import ReactStars from "react-rating-stars-component";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { addSelectedProduct } from "../../../redux/slices/Product/productSlice";
 const Product = ({
   _id,
   image,
   name,
+  description,
+  category,
   price,
+  stock,
   rating,
   reviews,
   addToCart,
   addToWishList,
 }) => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const handelClick = () => {
+    dispatch(
+      addSelectedProduct({
+        _id: _id,
+        image: image,
+        name: name,
+        price: price,
+        description: description,
+        category: category,
+        stock: stock,
+        rating: rating,
+        reviews: reviews,
+      })
+    );
+    navigate("/view/product");
+  };
   return (
-    <Box>
+    <Box cursor={"pointer"} onClick={handelClick}>
       <Card maxW="sm">
         <CardBody maxH={{ base: "400px", md: "450px", lg: "500px" }}>
           <Image

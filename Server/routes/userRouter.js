@@ -10,6 +10,7 @@ const {
   addAddress,
   updateAddress,
   viewAddress,
+  resetCart,
 } = require("../controller/userController");
 const { userProtect } = require("../middleware/authMiddleware");
 const {
@@ -22,12 +23,13 @@ const { addReview } = require("../controller/reviewController");
 router.route("/login").post(authUser);
 router.route("/signUp").post(registerUser);
 
-router.put("/addcart", userProtect, addTOCart);
+router.post("/addcart", userProtect, addTOCart);
 
 // cart
 router.get("/cart", userProtect, viewCart);
 router.put("/updateCart", userProtect, updateCart);
 router.put("/deletecart", userProtect, deleteCart);
+router.get("/resetCart", userProtect, resetCart);
 
 // wishList
 router.get("/wishlist", userProtect, viewWishList);

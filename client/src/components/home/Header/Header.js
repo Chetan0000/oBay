@@ -41,7 +41,7 @@ const Header = () => {
   const [search, setSearch] = useState();
   // globule states
   const CartItems = useSelector((state) => state.cart.products);
-  const wishItems = useSelector((state) => state.wishList.products);
+  // const wishItems = useSelector((state) => state.wishList.products);
   //----------- logics
 
   const handelCLick = () => {
@@ -130,7 +130,7 @@ const Header = () => {
             >
               <p>Home</p>
             </NavLink>
-            <NavLink
+            {/* <NavLink
               className="flex font-normal hover:font-bold w-[20px] h-6 justify-center items-center px-8 text-base text-[#767676] hover:underline underline-offset-[4px] decoration-[1px] hover:text-[#262626] md:border-r-[2px] border-r-gray-300 hoverEffect last:border-r-0"
               to={"/wishList"}
             >
@@ -140,7 +140,7 @@ const Header = () => {
               <span className="mt-[-20px]">
                 {wishItems.length > 0 ? <>{wishItems.length}</> : <></>}
               </span>
-            </NavLink>
+            </NavLink> */}
 
             <NavLink
               className="flex font-normal hover:font-bold w-[20px] h-6 justify-center items-center px-8 text-base text-[#767676] hover:underline underline-offset-[4px] decoration-[1px] hover:text-[#262626] md:border-r-[2px] border-r-gray-300 hoverEffect last:border-r-0"
@@ -182,10 +182,10 @@ const Header = () => {
                 <Link to="/cart">Cart</Link>
               </MenuItem>
               <MenuDivider />
-              <MenuItem bg={"#262626"}>
+              {/* <MenuItem bg={"#262626"}>
                 <Link to="/wishList">WishList</Link>
-              </MenuItem>
-              <MenuDivider />
+              </MenuItem> */}
+              {/* <MenuDivider /> */}
               <MenuItem bg={"#262626"}>
                 <Box
                   onClick={() => {
