@@ -18,17 +18,31 @@ import {
   ModalCloseButton,
   Textarea,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ReactStars from "react-rating-stars-component";
 import { IoIosArrowRoundBack } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import { addItemsToCart } from "../../actions/cartActions";
+import axios from "axios";
+import toast, { Toaster } from "react-hot-toast";
+import { addSelectedProduct } from "../../redux/slices/Product/ProductSlice";
+import { addReview } from "../../actions/productAction";
+import Slider from "react-slick";
+import { addItemsToWishList } from "../../actions/wishListAction";
+import SampleNextArrow from "../../components/home/NewArrivals/SampleNextArrow";
+import SamplePrevArrow from "../../components/home/NewArrivals/SamplePrevArrow";
+import Product from "../../components/home/NewArrivals/Product";
 
 const ViewProductDetails = () => {
+  window.scrollBy(0, -10000);
   const product = useSelector((state) => state.selectedProduct.selectedProduct);
   const user = useSelector((state) => state.user.user);
   const [ratingGiven, setRatingGiven] = useState();
+  const [reviewGiven, setReviewGiven] = useState();
+  const [recommenderProducts, setRecommenderProducts] = useState([]);
+  const [slideShowLength, setSlideShowLength] = useState(4);
+
   //   console.log(product);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -38,7 +52,7 @@ const ViewProductDetails = () => {
 
   // ----------------Business Logics ------------------
 
-  const addToCart = () => {
+  const addToCartt = () => {
     dispatch(addItemsToCart(product, 1, user));
   };
 
@@ -47,20 +61,111 @@ const ViewProductDetails = () => {
     navigate("/cart");
   };
 
-  const addReviewFunction = () => {};
+  const addReviewFunction = async () => {
+    if (ratingGiven == 0) {
+      return;
+    }
+    let avgRating = product.rating * product.reviews.length;
+    // console.log(avgRating);
+    avgRating += ratingGiven;
+    // console.log(avgRating);
+    avgRating = avgRating / (product.reviews.length + 1);
+    console.log(avgRating);
+    dispatch(addReview(user, product._id, avgRating, ratingGiven, reviewGiven));
+  };
 
+  // ------------------------- Recommended Products -------------
+  useEffect(() => {
+    getRecommended();
+  }, [product]);
+
+  const getRecommended = async () => {
+    try {
+      const { data } = await axios.post("/product/recommendedProduct", {
+        query: product.name,
+        category: product.category,
+      });
+      let newData = [];
+      newData = [...data];
+      newData = newData.filter((item) => {
+        return item._id != product._id;
+      });
+      console.log("WIth", newData);
+      setRecommenderProducts(newData);
+      console.log("Before", data);
+    } catch (error) {
+      console.log(error);
+      return;
+    }
+  };
+
+  const addToCart = (item) => {
+    dispatch(addItemsToCart(item, 1, user));
+    // console.log(product);
+    // console.log(items);
+  };
+
+  const addToWishList = (item) => {
+    dispatch(addItemsToWishList(item, user));
+    // console.log(wishItems);
+  };
+
+  // if (recommenderProducts.length < 3) {
+  //   setSlideShowLength(recommenderProducts.length);
+  // }
+  // ----------------------- react slick ---------------
+  const settings = {
+    dots: false,
+    infinite: true,
+    autoplay: false,
+    speed: 500,
+
+    nextArrow: <SampleNextArrow />,
+    prevArrow: <SamplePrevArrow />,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    initialSlide: 0,
+    responsive: [
+      {
+        // length: 3,
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
+          infinite: true,
+          dots: true,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          initialSlide: 1,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
+  };
   return (
     <>
       <Box
         w={"95vw"}
         minH={"80vh"}
-        border={"1px solid black"}
+        // border={"1px solid black"}
         m={"auto"}
         mt={"20px"}
         display={"flex"}
         alignItems={"center"}
         justifyContent={"center"}
         flexDirection={"column"}
+        gap={{ base: "20px", md: "0px", lg: "0px" }}
       >
         <Box
           w={"100%"}
@@ -92,12 +197,12 @@ const ViewProductDetails = () => {
             // w={"94vw"}
           >
             <Box
-              maxH={{ base: "300px", md: "400px", lg: "400px" }}
+              maxH={{ base: "300px", md: "350px", lg: "400px" }}
               //   border={"3px solid black"}
             >
               <Image
                 objectFit="cover"
-                maxW={{ base: "100%", md: "400px", lg: "400px" }}
+                maxW={{ base: "100%", md: "350px", lg: "400px" }}
                 maxH={{ base: "300px", md: "400px", lg: "400px" }}
                 src={product.image}
                 alt="Caffe Latte"
@@ -189,7 +294,7 @@ const ViewProductDetails = () => {
                     alignItems={"center"}
                     justifyContent={"center"}
                     cursor={"pointer"}
-                    onClick={addToCart}
+                    onClick={addToCartt}
                   >
                     <Text>Add to Cart</Text>
                   </Box>
@@ -232,9 +337,9 @@ const ViewProductDetails = () => {
                             isHalf={"true"}
                             onChange={(newValue) => {
                               setRatingGiven(newValue);
-                              console.log(
-                                `Example 4: new value is ${newValue}`
-                              );
+                              // console.log(
+                              //   `Example 4: new value is ${newValue}`
+                              // );
                             }}
                           />
                         </div>
@@ -245,6 +350,9 @@ const ViewProductDetails = () => {
                             w={"350px"}
                             _focusVisible={{
                               outline: "gray",
+                            }}
+                            onChange={(e) => {
+                              setReviewGiven(e.target.value);
                             }}
                           ></Textarea>
                         </Box>
@@ -266,7 +374,10 @@ const ViewProductDetails = () => {
                           color={"white"}
                           borderRadius={"0px"}
                           mr={3}
-                          onClick={onClose}
+                          onClick={() => {
+                            onClose();
+                            addReviewFunction();
+                          }}
                         >
                           Submit
                         </Button>
@@ -278,8 +389,41 @@ const ViewProductDetails = () => {
             </Stack>
           </Card>
         </Box>
-        <Box h={"80vh"} w={"100%"} border={"2px solid green"}>
-          Box
+        <Box h={"70vh"} w={"100%"}>
+          <Box>
+            <Slider {...settings}>
+              {recommenderProducts.map((product) => {
+                return (
+                  <Box
+                    key={product._id}
+                    onClick={() => {
+                      // console.log(product._id);
+                    }}
+                    h={"70vh"}
+                  >
+                    <Product
+                      _id={product._id}
+                      image={product.images}
+                      name={product.name}
+                      description={product.description}
+                      category={product.category}
+                      price={product.price}
+                      stock={product.stock}
+                      rating={product.ratings}
+                      reviews={product.reviews}
+                      seller={product.seller}
+                      addToCart={(e) => {
+                        addToCart(product);
+                      }}
+                      addToWishList={(e) => {
+                        addToWishList(product);
+                      }}
+                    />
+                  </Box>
+                );
+              })}
+            </Slider>
+          </Box>
         </Box>
       </Box>
     </>

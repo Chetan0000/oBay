@@ -33,12 +33,15 @@ import { RiAccountCircleFill } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import { addItemsToCart } from "../../../actions/cartActions";
 import { addItemsToWishList } from "../../../actions/wishListAction";
+import { handleNextPage, initiateSearch } from "../../../actions/searchAction";
+import { putSearchKeyWord } from "../../../redux/slices/searchSlice/searchSlice";
 
 const Header = () => {
   // const { user, searchResults, setSearchResults } = UserState();
   const userData = useSelector((state) => state.user.user);
   const navigate = useNavigate();
   const [search, setSearch] = useState();
+  const dispatch = useDispatch();
   // globule states
   const CartItems = useSelector((state) => state.cart.products);
   // const wishItems = useSelector((state) => state.wishList.products);
@@ -54,7 +57,17 @@ const Header = () => {
       navigate("/user");
     }
   };
-  const searchHandel = (query) => {};
+  const searchHandel = (e) => {
+    if (!search) {
+      return;
+    }
+
+    // console.log("header check");
+    dispatch(initiateSearch(search, 1));
+    dispatch(putSearchKeyWord(search));
+    // dispatch(handleNextPage);
+    navigate(`/products/search/${search}`);
+  };
 
   return (
     <>
@@ -96,6 +109,7 @@ const Header = () => {
                 type="text"
                 border={"none"}
                 bg={"#f5f5f3"}
+                value={search}
                 _focusVisible={{
                   outline: "none",
                 }}
@@ -106,7 +120,9 @@ const Header = () => {
               <InputRightElement cursor={"pointer"} padding={"auto"}>
                 <IoIosSearch
                   className="p-1 font-medium text-3xl"
-                  onClick={searchHandel(search)}
+                  onClick={(e) => {
+                    searchHandel(e);
+                  }}
                 />
               </InputRightElement>
             </InputGroup>

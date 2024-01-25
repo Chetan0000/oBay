@@ -22,7 +22,7 @@ import SampleNextArrow from "./SampleNextArrow";
 import SamplePrevArrow from "./SamplePrevArrow";
 import { FaCartPlus } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa";
-import Product from "../Product/Product";
+import Product from "./Product";
 import { useDispatch, useSelector } from "react-redux";
 // import { addToCartSlice } from "../../../redux/slices/cart/cartSlice";
 import { addItemsToCart } from "../../../actions/cartActions";

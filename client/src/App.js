@@ -32,6 +32,7 @@ import ViewProductDetails from "./pagse/ViewProduct/ViewProductDetails";
 
 // ------Contact Me page -----------
 import ContactMe from "./pagse/ContactMe/ContactMe";
+import Products from "./components/home/Product/Products";
 const App = () => {
   const [isLogin, setLsLogin] = useState(false);
   const { user, seller } = UserState();
@@ -66,7 +67,7 @@ const App = () => {
           {/* ----------------- Product Routes ----------------- */}
 
           <Route path="/view/product" element={<ViewProductDetails />}></Route>
-
+          <Route path="/products/search/:search" element={<Products />}></Route>
           {/*-------------------- Contact Me Router ----------------  */}
           <Route path="/contactMe" element={<ContactMe />}></Route>
           {/* --------------------------------------------------------- */}

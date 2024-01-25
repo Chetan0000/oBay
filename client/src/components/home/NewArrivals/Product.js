@@ -17,7 +17,7 @@ import { FaHeart } from "react-icons/fa";
 import ReactStars from "react-rating-stars-component";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { addSelectedProduct } from "../../../redux/slices/Product/productSlice";
+import { addSelectedProduct } from "../../../redux/slices/Product/ProductSlice";
 const Product = ({
   _id,
   image,
@@ -116,7 +116,10 @@ const Product = ({
               <Button
                 variant="ghost"
                 colorScheme="black"
-                onClick={addToWishList}
+                onClick={(e) => {
+                  addToWishList();
+                  e.stopPropagation();
+                }}
                 // color={"black"}
                 // fontSize={"20px"}
                 // _hover={{
@@ -132,7 +135,10 @@ const Product = ({
                 // _hover={{
                 //   color: "#191919",
                 // }}
-                onClick={addToCart}
+                onClick={(e) => {
+                  addToCart();
+                  e.stopPropagation();
+                }}
               >
                 <FaCartPlus />
               </Button>

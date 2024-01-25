@@ -3,6 +3,7 @@ const asyncHandler = require("express-async-handler");
 const generateToken = require("../config/generateToken");
 const Cart = require("../models/cartModel");
 const Address = require("../models/address");
+const Product = require("../models/productModel");
 
 // ------------- user SIgn up -----------------------
 const registerUser = asyncHandler(async (req, res) => {
@@ -247,6 +248,44 @@ const viewAddress = asyncHandler(async (req, res) => {
   }
 });
 
+// function to add review
+
+const addReview = asyncHandler(async (req, res) => {
+  const { productId, rating, avgRating, comment } = req.body;
+  const newReview = {
+    user: req.user._id,
+    rating: rating,
+    comment: comment,
+  };
+  await Product.findByIdAndUpdate(
+    { _id: productId },
+    { ratings: avgRating },
+    {
+      new: true,
+      upsert: true,
+    }
+  ).then((product) => {
+    product.reviews.push(newReview);
+    product.save();
+    res.status(200).send(product);
+  });
+
+  try {
+    // const data = await Product.findByIdAndUpdate(
+    //   { _id: productId },
+    //   { ratings: avgRating },
+    //   {
+    //     new: true,
+    //     upsert: true,
+    //   }
+    // );
+    // console.log(data);
+    // res.status(200).send(data);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
+
 module.exports = {
   authUser,
   registerUser,
@@ -258,4 +297,5 @@ module.exports = {
   addAddress,
   updateAddress,
   viewAddress,
+  addReview,
 };

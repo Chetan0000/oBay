@@ -11,6 +11,7 @@ const {
   updateAddress,
   viewAddress,
   resetCart,
+  addReview,
 } = require("../controller/userController");
 const { userProtect } = require("../middleware/authMiddleware");
 const {
@@ -18,7 +19,6 @@ const {
   addWishList,
   viewWishList,
 } = require("../controller/wishListController");
-const { addReview } = require("../controller/reviewController");
 
 router.route("/login").post(authUser);
 router.route("/signUp").post(registerUser);
