@@ -8,6 +8,11 @@ import { clearCart } from "../../actions/cartActions";
 import { Link } from "react-router-dom";
 import { setTotalPrice } from "../../redux/slices/cart/cartSlice";
 import { motion } from "framer-motion";
+import axios from "axios";
+
+// --------- strip -----------
+import { loadStripe } from "@stripe/stripe-js";
+
 const Cart = () => {
   const display = useDispatch();
   const [total, setTotal] = useState(0);
@@ -20,6 +25,7 @@ const Cart = () => {
   console.log("From Cart.js   ", CartItems);
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
+  const cart = useSelector((state) => state.cart.products);
   // -------- logics ------------
 
   const handelClick = async () => {
@@ -53,6 +59,79 @@ const Cart = () => {
     // setOffer(price);
     setTotal(offerPrice + shippingCharge);
     // console.log(offerPrice);
+  };
+
+  // ------ check out function ----------
+
+  const checkoutHandler = async () => {
+    // const pIds = [...cart];
+    // const {
+    //   data: { key },
+    // } = await axios.get("http://localhost:8000/api/getkey");
+
+    // const {
+    //   data: { order },
+    // } = await axios.post("http://localhost:8000/api/checkout", {
+    //   amount: total,
+    // });
+
+    // const options = {
+    //   key,
+    //   amount: order.amount,
+    //   currency: "INR",
+    //   name: "6 Pack Programmer",
+    //   description: "Tutorial of RazorPay",
+    //   image: "https://avatars.githubusercontent.com/u/25058652?v=4",
+    //   order_id: order.id,
+    //   callback_url: "http://localhost:8000/api/paymentverification",
+    //   prefill: {
+    //     name: "Gaurav Kumar",
+    //     email: "gaurav.kumar@example.com",
+    //     contact: "9999999999",
+    //   },
+    //   notes: {
+    //     address: "Razorpay Corporate Office",
+    //   },
+    //   theme: {
+    //     color: "#121212",
+    //   },
+    // };
+    // const razor = new window.Razorpay(options);
+    // razor.open();
+
+    // ---------- Stripe payment Gateway -------------
+    const stripe = await loadStripe(
+      "pk_test_51OcsteSHGWMLpJ7dJFXQg07g4Oe8s8V1ewu1SUKqUGG9SYSGJDtlBvlggydmIxX5U41evYhFZnMGRcwy9FLzZ4M000V157g67i"
+    );
+    const body = {
+      products: cart,
+      token: user,
+    };
+
+    const headers = {
+      "content-type": "application/json",
+    };
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+      },
+    };
+
+    const response = await fetch("http://localhost:8000/api/checkout", {
+      method: "post",
+      headers: headers,
+      body: JSON.stringify(body),
+    });
+
+    const session = await response.json();
+
+    const result = stripe.redirectToCheckout({
+      sessionId: session.id,
+    });
+
+    if (result.error) {
+      console.log(result.error);
+    }
   };
 
   return (
@@ -213,8 +292,11 @@ const Cart = () => {
                   </p>
                 </div>
                 <div className="flex justify-end">
-                  <Link to="/paymentgateway">
-                    <button className="w-52 h-10 bg-primeColor text-white hover:bg-black duration-300">
+                  <Link>
+                    <button
+                      className="w-52 h-10 bg-primeColor text-white hover:bg-black duration-300"
+                      onClick={checkoutHandler}
+                    >
                       Proceed to Checkout
                     </button>
                   </Link>
