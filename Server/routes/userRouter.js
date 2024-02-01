@@ -12,6 +12,7 @@ const {
   viewAddress,
   resetCart,
   addReview,
+  getOrders,
 } = require("../controller/userController");
 const { userProtect } = require("../middleware/authMiddleware");
 const {
@@ -42,5 +43,8 @@ router.post("/addAddress", userProtect, addAddress);
 router.put("/updateAddress", userProtect, updateAddress);
 // review routes
 router.post("/addreview", userProtect, addReview);
+
+// Order Routes
+router.get("/orders", userProtect, getOrders);
 
 module.exports = router;

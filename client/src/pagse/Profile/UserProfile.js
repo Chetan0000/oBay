@@ -104,6 +104,9 @@ const UserProfile = () => {
                 transitionDuration: "0.2s",
                 transitionTimingFunction: "ease-in-out",
               }}
+              onClick={() => {
+                navigate("/orders");
+              }}
             >
               <Box h={"80%"} w={"96px"} objectFit={"cover"}>
                 <Image

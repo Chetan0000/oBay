@@ -4,7 +4,7 @@ const generateToken = require("../config/generateToken");
 const Cart = require("../models/cartModel");
 const Address = require("../models/address");
 const Product = require("../models/productModel");
-
+const Order = require("../models/orderModel");
 // ------------- user SIgn up -----------------------
 const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password, phone } = req.body;
@@ -286,6 +286,31 @@ const addReview = asyncHandler(async (req, res) => {
   }
 });
 
+// ---------- Function to all the orders --------------
+const getOrders = asyncHandler(async (req, res) => {
+  const user = req.user;
+
+  const populateOptions = {
+    path: [
+      { path: "user", select: "-password" }, // Exclude password from User data
+      { path: "addressId" },
+      { path: "items.productId" },
+    ],
+  };
+  try {
+    var data = await Order.find({ user: user._id })
+      .sort({
+        createdAt: -1,
+      })
+      .populate("items.productId", "-reviews")
+      .then((order) => {
+        res.status(200).send(order);
+      });
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+});
+
 module.exports = {
   authUser,
   registerUser,
@@ -298,4 +323,5 @@ module.exports = {
   updateAddress,
   viewAddress,
   addReview,
+  getOrders,
 };

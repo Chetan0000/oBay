@@ -18,6 +18,7 @@ import Cart from "./pagse/Cart/Cart";
 import UserPage from "./pagse/userPage/UserPage";
 import WIshListPage from "./pagse/WIshLIst/WIshListPage";
 import UserProfile from "./pagse/Profile/UserProfile";
+import Orders from "./pagse/Orders/Orders";
 // ------seller components -----------
 
 import SellerPage from "./pagse/SellerPage/sellerPage";
@@ -29,7 +30,7 @@ import Profile from "./seller-Dash/seller-dashboard/Profile";
 import EditUser from "./components/UserProfile/EditUser";
 import UserAddress from "./components/UserProfile/UserAddress";
 import ViewProductDetails from "./pagse/ViewProduct/ViewProductDetails";
-
+import PaymentSuccess from "./components/Payment/PaymentSuccess";
 // ------Contact Me page -----------
 import ContactMe from "./pagse/ContactMe/ContactMe";
 import Products from "./components/home/Product/Products";
@@ -51,7 +52,7 @@ const App = () => {
         )} */}
         {window.location.pathname === "/seller" ||
         window.location.pathname === "/user" ||
-        window.location.pathname === "/contactMe" ? null : (
+        window.location.pathname === "/contactMe" ? null : ( // window.location.pathname === "/payment/success"
           <>{(seller && <SellerHeader />) || <Header />}</>
         )}
         <Routes>
@@ -60,6 +61,7 @@ const App = () => {
           <Route path="/" element={<Home />}></Route>
           <Route path="/user" element={<UserPage />}></Route>
           <Route path="/cart" element={<Cart />}></Route>
+          <Route path="/orders" element={<Orders />}></Route>
           {/* <Route path="/wishList" element={<WIshListPage />}></Route> */}
           <Route path="/user/profile" element={<UserProfile />}></Route>
           <Route path="/user/profile/editUser" element={<EditUser />}></Route>
@@ -71,6 +73,9 @@ const App = () => {
           {/*-------------------- Contact Me Router ----------------  */}
           <Route path="/contactMe" element={<ContactMe />}></Route>
           {/* --------------------------------------------------------- */}
+
+          {/* ----------- Payment Routes -----------------  */}
+          <Route path="/payment/success" element={<PaymentSuccess />}></Route>
 
           {/* ---------------------- seller Routes ------------------------ */}
 

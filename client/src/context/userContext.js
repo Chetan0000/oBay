@@ -19,7 +19,7 @@ const UserProvider = ({ children }) => {
     setSeller(sellerInfo);
     console.log(localStorage.getItem("sellerInfo"));
     if (userInfo) {
-      location("/");
+      // location("/");
     }
 
     if (sellerInfo) {

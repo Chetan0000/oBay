@@ -7,11 +7,9 @@
 .slick-slide > div {
   margin: 0px 10px;
 }
-
-.no-scrollbar {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+body {
 }
+
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
