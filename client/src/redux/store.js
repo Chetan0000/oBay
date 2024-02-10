@@ -15,12 +15,12 @@ import {
   REGISTER,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-
+import sellerReducer from "./slices/SellerSlices/sellerSlice";
 const persistConfig = {
   key: "root",
   version: 1,
   storage,
-  whitelist: ["user", "cart"],
+  whitelist: ["user", "cart", "seller"],
 };
 const rootReducer = combineReducers({
   cart: cartReducer,
@@ -28,6 +28,7 @@ const rootReducer = combineReducers({
   selectedProduct: productReducer,
   user: userReducer,
   search: searchReducer,
+  seller: sellerReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

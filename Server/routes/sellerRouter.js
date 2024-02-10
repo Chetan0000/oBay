@@ -2,6 +2,8 @@ const express = require("express");
 const {
   authSeller,
   registerSeller,
+  orders,
+  updateOrder,
 } = require("../controller/sellerController");
 const {
   addProduct,
@@ -23,6 +25,11 @@ router.get("/products", sellerProtect, viewProducts);
 router.post("/addproduct", sellerProtect, addProduct);
 router.put("/productupdate", sellerProtect, editProduct);
 router.get("/deleteProduct/:productId", sellerProtect, deleteProduct);
+
+// Order Routers
+
+router.get("/orders", sellerProtect, orders);
+router.post("/order/update", sellerProtect, updateOrder);
 
 // product reviews
 router.get("/product/review", sellerProtect, allReviews);

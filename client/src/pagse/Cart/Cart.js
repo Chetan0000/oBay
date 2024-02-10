@@ -65,6 +65,17 @@ const Cart = () => {
   // ------ check out function ----------
 
   const checkoutHandler = async () => {
+    if (user == 0) {
+      toast.error("Please Login/SignUp to create order", {
+        duration: 3000,
+      });
+      const locate = () => {
+        navigate("/user");
+      };
+      setTimeout(locate, 3000);
+      return;
+    }
+
     //  ------- check for address ------------
 
     const config = {

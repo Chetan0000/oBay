@@ -145,7 +145,17 @@ const Orders = () => {
                     {/* image price name  ------------ sub main -----------*/}
                     {order.items.map((item) => {
                       return (
-                        <>
+                        <Box
+                          display={"flex"}
+                          flexDirection={{
+                            base: "column",
+                            md: "row",
+                            lg: "row",
+                          }}
+                          gap={"10px"}
+                          border={"2px solid #f6f6f6"}
+                          shadow={"sm"}
+                        >
                           <Box
                             border={"2px solid #f6f6f6"}
                             w={{ base: "100%", md: "60%", lg: "60%" }}
@@ -185,7 +195,23 @@ const Orders = () => {
                               <Text fontWeight={"semibold"}>{item.status}</Text>
                             </Box>
                           </Box>
-                        </>
+                          <Box>
+                            <Text fontWeight={"medium"}>Address: </Text>
+                            <div className="pl-[6px]">
+                              <Box display={"flex"}>
+                                <Text>{order.addressId.name} ,</Text>{" "}
+                                <Text>{order.addressId.mobileNumber}</Text>
+                              </Box>
+                              <Text>{order.addressId.address}</Text>
+                              <Box display={"flex"}>
+                                <Text>
+                                  {order.addressId.cityDistrictTown} ,
+                                </Text>
+                                <Text>{order.addressId.pinCode}</Text>
+                              </Box>
+                            </div>
+                          </Box>
+                        </Box>
                       );
                     })}
                     <Box display={"flex"} justifyContent={"end"}>

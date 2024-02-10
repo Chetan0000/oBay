@@ -1,6 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const Seller = require("../models/sellerModel");
 const generateToken = require("../config/generateToken");
+const Order = require("../models/orderModel");
 
 const registerSeller = asyncHandler(async (req, res) => {
   const { name, email, phone, password } = req.body;
@@ -50,7 +51,7 @@ const authSeller = asyncHandler(async (req, res) => {
       _id: seller._id,
       name: seller.name,
       email: seller.email,
-      products: seller.products,
+      phone: seller.phone_no,
       token: generateToken(seller._id),
     });
     console.log(seller);
@@ -59,4 +60,47 @@ const authSeller = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { authSeller, registerSeller };
+const orders = asyncHandler(async (req, res) => {
+  const id = req.seller._id;
+  console.log(id);
+  try {
+    var orders = await Order.find({
+      items: {
+        $elemMatch: {
+          seller: id, // Convert string to ObjectID
+        },
+      },
+    })
+      .populate("user addressId items.productId items.seller")
+      .then((order) => {
+        res.status(200).send(order);
+      });
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
+
+const updateOrder = asyncHandler(async (req, res) => {
+  const { option, orderId, productId } = req.body;
+  // Find the matching order
+  console.log(req.seller);
+  try {
+    const order = await Order.findOneAndUpdate(
+      {
+        _id: orderId,
+        "items.productId": productId,
+      },
+      { $set: { "items.$.status": option } },
+      { new: true }
+    );
+
+    res.status(200).send(order);
+  } catch (error) {
+    console.error("Error updating item status:", error);
+    res
+      .status(400)
+      .send({ message: "Error in updating please try later ... " });
+  }
+});
+
+module.exports = { authSeller, registerSeller, orders, updateOrder };

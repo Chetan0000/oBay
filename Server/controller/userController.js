@@ -290,19 +290,12 @@ const addReview = asyncHandler(async (req, res) => {
 const getOrders = asyncHandler(async (req, res) => {
   const user = req.user;
 
-  const populateOptions = {
-    path: [
-      { path: "user", select: "-password" }, // Exclude password from User data
-      { path: "addressId" },
-      { path: "items.productId" },
-    ],
-  };
   try {
     var data = await Order.find({ user: user._id })
       .sort({
         createdAt: -1,
       })
-      .populate("items.productId", "-reviews")
+      .populate("addressId items.productId", "-reviews")
       .then((order) => {
         res.status(200).send(order);
       });

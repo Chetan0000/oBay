@@ -122,6 +122,7 @@ const createOrders = asyncHandler(async (paymentID, orderID) => {
   items.map((item) => {
     itemData.push({
       productId: item.item._id,
+      seller: item.item.seller,
       payablePrice: item.item.price,
       purchasedQty: item.count,
     });

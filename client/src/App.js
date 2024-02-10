@@ -34,6 +34,7 @@ import PaymentSuccess from "./components/Payment/PaymentSuccess";
 // ------Contact Me page -----------
 import ContactMe from "./pagse/ContactMe/ContactMe";
 import Products from "./components/home/Product/Products";
+import SellerOrders from "./seller-Dash/seller-dashboard/SellerOrders";
 const App = () => {
   const [isLogin, setLsLogin] = useState(false);
   const { user, seller } = UserState();
@@ -82,6 +83,7 @@ const App = () => {
           <Route path="/seller/dash" element={<SellerDashBoard />}></Route>
           <Route path="/seller/addProduct" element={<AddProduct />}></Route>
           <Route path="/seller/profile" element={<Profile />}></Route>
+          <Route path="/seller/orders" element={<SellerOrders />}></Route>
           {/* <Route path="/seller/view" element={<ViewProduct />}></Route> */}
         </Routes>
       </div>

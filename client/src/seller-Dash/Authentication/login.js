@@ -13,6 +13,8 @@ import React, { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { logSeller } from "../../redux/slices/SellerSlices/sellerSlice";
 const Login = () => {
   const [flipper, setFlipper] = useState(false);
   const [email, setEmail] = useState("");
@@ -20,6 +22,7 @@ const Login = () => {
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
   const location = useNavigate();
+  const dispatch = useDispatch();
   // function to set show/hide password
   const handelClick = () => {
     setShow(!show);
@@ -49,6 +52,7 @@ const Login = () => {
       );
       // console.log("data");
       localStorage.setItem("sellerInfo", JSON.stringify(data));
+      dispatch(logSeller({}));
       // console.log(localStorage.getItem("sellerInfo"));
       toast.success("Logged in Successfully ", {
         duration: 3000,

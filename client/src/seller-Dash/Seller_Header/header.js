@@ -16,6 +16,7 @@ import { IconContext } from "react-icons";
 import { IoIosSearch } from "react-icons/io";
 import { HiMenuAlt2 } from "react-icons/hi";
 import { motion } from "framer-motion";
+import { RiAccountCircleFill } from "react-icons/ri";
 
 const SellerHeader = () => {
   const location = useLocation();
@@ -65,24 +66,27 @@ const SellerHeader = () => {
             </NavLink>
 
             <NavLink
-              className="flex font-normal hover:font-bold w-45 h-6 justify-center items-center px-12 text-base text-[#767676] hover:underline underline-offset-[4px] decoration-[1px] hover:text-[#262626] md:border-r-[2px] border-r-gray-300 hoverEffect last:border-r-0"
+              className="flex font-normal hover:font-bold w-45 h-6 justify-center items-center px-5 text-base text-[#767676] hover:underline underline-offset-[4px] decoration-[1px] hover:text-[#262626] md:border-r-[2px] border-r-gray-300 hoverEffect last:border-r-0"
               to={"/seller/addProduct"}
             >
-              <p>Add Product</p>
+              <p className="w-[95px]">Add Product</p>
             </NavLink>
+
             <NavLink
-              className="flex font-normal hover:font-bold w-20 h-6 justify-center items-center px-12 text-base text-[#767676] hover:underline underline-offset-[4px] decoration-[1px] hover:text-[#262626] md:border-r-[2px] border-r-gray-300 hoverEffect last:border-r-0"
+              className="flex font-normal hover:font-bold w-20 h-6 justify-center items-center px-1 text-base text-[#767676] hover:underline underline-offset-[4px] decoration-[1px] hover:text-[#262626] md:border-r-[2px] border-r-gray-300 hoverEffect last:border-r-0"
               to={"/seller/profile"}
             >
-              <p>Profile</p>
+              <p>
+                <RiAccountCircleFill size={"1.5rem"} />
+              </p>
             </NavLink>
-            <NavLink
+            {/* <NavLink
               className="flex font-normal hover:font-bold w-20 h-6 justify-center items-center px-12 text-base text-[#767676] hover:underline underline-offset-[4px] decoration-[1px] hover:text-[#262626] md:border-r-[2px] border-r-gray-300 hoverEffect last:border-r-0"
               onClick={logOutHandler}
               to={"/seller"}
             >
               <p>LogOut</p>
-            </NavLink>
+            </NavLink> */}
           </motion.ui>
         </Box>
 
