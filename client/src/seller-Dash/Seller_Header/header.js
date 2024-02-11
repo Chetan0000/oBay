@@ -109,10 +109,6 @@ const SellerHeader = () => {
               <MenuItem bg={"#262626"}>
                 <Link to="/seller/profile">Profile</Link>
               </MenuItem>
-
-              <MenuItem bg={"#262626"}>
-                <Link onClick={logOutHandler}>LogOut</Link>
-              </MenuItem>
             </MenuList>
           </Menu>
         </Box>

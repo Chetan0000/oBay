@@ -27,7 +27,7 @@ const BannerBottom = () => {
             transitionTimingFunction: "ease-in-out",
           }}
         >
-          <Text>
+          <Text fontSize={{ base: "12px", md: "14px", lg: "16px" }}>
             {" "}
             <span className="lg:text-[20px] sm:text-[18px] font-semibold">
               2{" "}
@@ -52,7 +52,10 @@ const BannerBottom = () => {
           <span className="font-bold lg:text-[25px] sm:text-[22px]">
             <LiaShippingFastSolid />
           </span>
-          <Text> Free Shipping</Text>
+          <Text fontSize={{ base: "12px", md: "14px", lg: "16px" }}>
+            {" "}
+            Free Shipping
+          </Text>
         </Box>
         <Box
           // border={"1px solid black"}
@@ -68,11 +71,13 @@ const BannerBottom = () => {
             transitionTimingFunction: "ease-in-out",
           }}
         >
-          <span className="lg:text-[20px] sm:text-[18px]  font-bold">
+          <Text fontSize={{ base: "12px", md: "14px", lg: "16px" }}>
             {" "}
             <FaArrowRotateLeft />
-          </span>
-          <Text>Return policy in 30 days</Text>
+          </Text>
+          <Text fontSize={{ base: "12px", md: "14px", lg: "16px" }}>
+            Return policy in 30 days
+          </Text>
         </Box>
       </Box>
     </>

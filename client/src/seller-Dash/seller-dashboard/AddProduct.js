@@ -15,10 +15,9 @@ import { NavLink, useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import { UserState } from "../../context/userContext";
 import axios from "axios";
-
+import { useDispatch, useSelector } from "react-redux";
 const AddProduct = () => {
-  const { seller } = UserState();
-
+  const seller = useSelector((state) => state.seller.seller);
   const location = useNavigate();
   const [loading, setLoading] = useState(false);
 
@@ -92,10 +91,11 @@ const AddProduct = () => {
         config
       );
       setLoading(false);
+      setCategory("Category");
       toast.success("Item added successfully", {
         duration: 3000,
       });
-      alert("Item added successfully");
+
       setImages("");
       setName("");
       setCategory("");
@@ -104,9 +104,10 @@ const AddProduct = () => {
       setStock("");
     } catch (error) {
       setLoading(false);
-      toast.error(error.response.data, {
-        duration: 3000,
-      });
+      console.log(error);
+      // toast.error(error.response.data, {
+      //   duration: 3000,
+      // });
       return;
     }
   };
@@ -121,8 +122,8 @@ const AddProduct = () => {
       // border={"1px solid red"}
     >
       <Box
-        width={"100%"}
-        display={{ base: "flex", md: "none", lg: "none" }}
+        width={{ base: "100%", md: "80%", lg: "80%" }}
+        display={"flex"}
         justifyContent={"flex-start"}
         paddingY={"4px"}
         paddingX={"10px"}
@@ -131,16 +132,17 @@ const AddProduct = () => {
           <IoMdArrowBack />
         </NavLink>
       </Box>
-      <div className="shadow-2xl sm:w-4/5 md:w-3/4 lg:w-3/6 sm:min-h-4/5 md:h-3/4 lg:h-3/4 flex-col justify-center">
+      <div className="shadow-2xl sm:w-[85%] md:w-[80%] lg:w-[60%] sm:min-h-4/5 md:h-3/4 lg:h-3/4 flex-col justify-center">
         <Box
           display={"flex"}
           flexDirection={{ base: "column", md: "row", lg: "row" }}
           justifyContent={""}
+          // flexWrap={"wrap"}
           // alignItems={"center"}
           // w={{ base: "80%", md: "75%", lg: "75%" }}
           // h={{ base: "80%", md: "75%", lg: "75%" }}
-          w={"100%"}
-          h={"90%"}
+          minW={"100%"}
+          minH={"90%"}
           gap={"20px"}
           // border={"1px solid black"}
         >
@@ -234,6 +236,7 @@ const AddProduct = () => {
               <Select
                 placeholder="Category"
                 bg={"#EEEEEC"}
+                value={category}
                 onChange={(e) => {
                   setCategory(e.target.value);
                   // console.log(category);

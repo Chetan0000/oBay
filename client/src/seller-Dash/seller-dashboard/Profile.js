@@ -17,6 +17,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { deleteUserData } from "../../actions/userActions";
 import { useNavigate } from "react-router-dom";
 import { deleteItemSlice } from "../../redux/slices/cart/cartSlice";
+import { deleteSeller } from "../../redux/slices/SellerSlices/sellerSlice";
+import { persistor } from "../../redux/store";
+
 const Profile = () => {
   const seller = useSelector((state) => state.seller.seller);
   const dispatch = useDispatch();
@@ -24,7 +27,9 @@ const Profile = () => {
   //-------- Log Out function --------------
   const handelClick = () => {
     if (seller) {
-      dispatch(deleteItemSlice());
+      localStorage.clear();
+      persistor.purge();
+      dispatch(deleteSeller({ seller }));
       navigate("/");
     }
 
@@ -169,7 +174,39 @@ const Profile = () => {
                 {/* <Text fontSize={"14px"}></Text> */}
               </Box>
             </Box>
-            {/* ----------------------- Your Addresses ------------ */}
+            <Box
+              w={{ base: "80%", md: "30%", lg: "30%" }}
+              h={"100px"}
+              // border={"1px solid #d6d6d6"}
+              borderRadius={"10px"}
+              display={"flex"}
+              justifyContent={"center"}
+              alignItems={"center"}
+              // cursor={"pointer"}
+              // _hover={{
+              //   bg: "#eeeeee",
+              //   transitionDuration: "0.2s",
+              //   transitionTimingFunction: "ease-in-out",
+              // }}
+              // onClick={() => {
+              //   navigate("/seller/orders");
+              // }}
+            >
+              {/* <Box h={"80%"} w={"96px"} objectFit={"cover"}>
+                <Image
+                  src="https://res.cloudinary.com/dlek1smmu/image/upload/v1704905669/bd6cc8c0df3d008c821fe141ef47c2e8_sozot4.png"
+                  h={"80%"}
+                  w={"90%"}
+                  m={"auto"}
+                ></Image>
+              </Box>
+              <Box>
+                <Text fontSize={"17px"}> Your Orders</Text>
+                <Text fontSize={"14px"}>
+                  Track, return, or buy things again
+                </Text>
+              </Box> */}
+            </Box>
 
             <Box></Box>
           </Box>

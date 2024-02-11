@@ -304,6 +304,19 @@ const getOrders = asyncHandler(async (req, res) => {
   }
 });
 
+// Function to search product details
+
+const searchByID = asyncHandler(async (req, res) => {
+  const id = req.query.ID;
+
+  try {
+    const data = await Product.findById(id);
+    res.status(200).send(data);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
+
 module.exports = {
   authUser,
   registerUser,
@@ -317,4 +330,5 @@ module.exports = {
   viewAddress,
   addReview,
   getOrders,
+  searchByID,
 };

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addSearchResults } from "../../../redux/slices/searchSlice/searchSlice";
 import { handleNextPage, handlePrevPage } from "../../../actions/searchAction";
-import { Box } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 import Product from "../NewArrivals/Product";
 import ItemCard from "./ItemCard";
 import { IoIosArrowRoundBack } from "react-icons/io";
@@ -74,99 +74,122 @@ const Products = () => {
   // };
   return (
     <>
-      <div>
-        {/* Display the products */}
-        <Box
-          w={"100%"}
-          className="Back_button"
-          display={"flex"}
-          alignItems={"center"}
-          cursor={"pointer"}
-          onClick={() => {
-            navigate(-1);
-          }}
-          paddingLeft={"10px"}
-        >
-          <IoIosArrowRoundBack size={"2rem"} />
-        </Box>
-        <Box
-          display={"flex"}
-          alignItems={"center"}
-          justifyContent={"center"}
-          mt={"10px"}
-        >
-          <div className="grid sm:gap-2 md:gap-4 lg:gap-5 lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-2 ">
-            {products.map((product) => {
-              return (
-                <Box key={product._id}>
-                  <ItemCard
-                    _id={product._id}
-                    image={product.images}
-                    name={product.name}
-                    description={product.description}
-                    category={product.category}
-                    price={product.price}
-                    stock={product.stock}
-                    rating={product.ratings}
-                    reviews={product.reviews}
-                    seller={product.seller}
-                    addToCart={(e) => {
-                      addToCart(product);
-                    }}
-                    addToWishList={(e) => {
-                      addToWishList(product);
-                    }}
-                  />
-                </Box>
-              );
-            })}
-          </div>
-        </Box>
+      {products.length > 0 ? (
+        <>
+          <div>
+            {/* Display the products */}
+            <Box
+              w={"100%"}
+              className="Back_button"
+              display={"flex"}
+              alignItems={"center"}
+              cursor={"pointer"}
+              onClick={() => {
+                navigate(-1);
+              }}
+              paddingLeft={"10px"}
+            >
+              <IoIosArrowRoundBack size={"2rem"} />
+            </Box>
+            <Box
+              display={"flex"}
+              // alignItems={"center"}
+              justifyContent={"center"}
+              mt={"10px"}
+              // border={"1px solid black"}
+              minH={"75vh"}
+            >
+              <div className="grid sm:gap-2 md:gap-4 lg:gap-5 lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-2 ">
+                {products.map((product) => {
+                  return (
+                    <Box key={product._id}>
+                      <ItemCard
+                        _id={product._id}
+                        image={product.images}
+                        name={product.name}
+                        description={product.description}
+                        category={product.category}
+                        price={product.price}
+                        stock={product.stock}
+                        rating={product.ratings}
+                        reviews={product.reviews}
+                        seller={product.seller}
+                        addToCart={(e) => {
+                          addToCart(product);
+                        }}
+                        addToWishList={(e) => {
+                          addToWishList(product);
+                        }}
+                      />
+                    </Box>
+                  );
+                })}
+              </div>
+            </Box>
 
-        {/* Pagination controls */}
-        {/* #ebe3e3 */}
-        <Box
-          // borderTop={"1px solid black"}
-          mt={"15px"}
-          display={"flex"}
-          justifyContent={"center"}
-          alignItems={"center"}
-          gap={"25px"}
-        >
+            {/* Pagination controls */}
+            {/* #ebe3e3 */}
+            <Box
+              // borderTop={"1px solid black"}
+              mt={"15px"}
+              display={"flex"}
+              justifyContent={"center"}
+              alignItems={"center"}
+              gap={"25px"}
+            >
+              <Box
+                pl={"5px"}
+                pr={"5px"}
+                border={"1px solid #ebe3e3"}
+                cursor={"pointer"}
+                onClick={() => {
+                  handlePrevPage();
+                }}
+                _hover={{
+                  boxShadow: "lg",
+                  transitionDuration: "0.2s",
+                  transitionTimingFunction: "ease-in-out",
+                }}
+              >
+                Prev
+              </Box>
+              <Box
+                pl={"5px"}
+                pr={"5px"}
+                border={"1px solid #ebe3e3"}
+                cursor={"pointer"}
+                onClick={() => {
+                  handleNextPage();
+                }}
+                _hover={{
+                  boxShadow: "lg",
+                  transitionDuration: "0.2s",
+                  transitionTimingFunction: "ease-in-out",
+                }}
+              >
+                Next
+              </Box>
+            </Box>
+          </div>
+        </>
+      ) : (
+        <>
           <Box
-            pl={"5px"}
-            pr={"5px"}
-            border={"1px solid #ebe3e3"}
-            cursor={"pointer"}
-            onClick={() => {
-              handlePrevPage();
-            }}
-            _hover={{
-              boxShadow: "lg",
-              transitionDuration: "0.2s",
-              transitionTimingFunction: "ease-in-out",
-            }}
+            w={"100vw"}
+            h={"80vh"}
+            display={"flex"}
+            justifyContent={"center"}
+            // alignItems={"center"}
           >
-            Prev
+            <Text
+              fontSize={{ base: "20px", md: "30px", lg: "35px" }}
+              color={"gray"}
+            >
+              Item not found...!
+            </Text>
           </Box>
-          <Box
-            pl={"5px"}
-            pr={"5px"}
-            border={"1px solid #ebe3e3"}
-            cursor={"pointer"}
-            onClick={() => {
-              handleNextPage();
-            }}
-            _hover={{
-              boxShadow: "lg",
-              transitionDuration: "0.2s",
-              transitionTimingFunction: "ease-in-out",
-            }}
-          >
-            Next
-          </Box>
-        </Box>
-      </div>
+        </>
+      )}
     </>
   );
 };

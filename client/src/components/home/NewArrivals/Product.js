@@ -50,9 +50,26 @@ const Product = ({
     navigate("/view/product");
   };
   return (
-    <Box cursor={"pointer"} onClick={handelClick}>
-      <Card maxW="sm">
-        <CardBody maxH={{ base: "400px", md: "450px", lg: "500px" }}>
+    <Box
+      cursor={"pointer"}
+      onClick={handelClick}
+      // border={"1px solid black"}
+      minH={"200px"}
+      display={"flex"}
+      justifyContent={"center"}
+      alignItems={"center"}
+    >
+      <Card
+        maxW="sm"
+        w={{ base: "300px", md: "350px", lg: "350px" }}
+        h={{ base: "450px", md: "500px", lg: "500px" }}
+        shadow={"lg"}
+        // border={"1px solid red"}
+      >
+        <CardBody
+          maxH={{ base: "400px", md: "450px", lg: "500px" }}
+          h={{ base: "400px", md: "450px", lg: "600px" }}
+        >
           <Image
             w={"100%"}
             h={{ base: "250px", md: "300px", lg: "300px" }}

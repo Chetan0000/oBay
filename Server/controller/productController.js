@@ -95,10 +95,23 @@ const viewProduct = asyncHandler(async (req, res) => {
   }
 });
 
+// ----------------- Featured Section --
+const getFeatured = asyncHandler(async (req, res) => {
+  try {
+    const data = await Product.aggregate([
+      { $sample: { size: 10 } }, // Get 10 random documents
+    ]);
+    res.status(200).send(data);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
+
 module.exports = {
   addProduct,
   editProduct,
   deleteProduct,
   viewProducts,
   viewProduct,
+  getFeatured,
 };

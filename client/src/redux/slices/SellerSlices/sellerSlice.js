@@ -14,11 +14,8 @@ export const sellerSlice = createSlice({
     },
 
     deleteSeller: (state, action) => {
-      if (state.seller) {
-        state.seller = [];
-      } else {
-        return;
-      }
+      state.seller = [];
+      console.log(state.seller);
     },
   },
 });

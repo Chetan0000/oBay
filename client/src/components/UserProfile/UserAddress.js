@@ -139,7 +139,7 @@ const UserAddress = () => {
         onClick={() => {
           navigate("/user/profile");
         }}
-        position={"absolute"}
+        // position={"absolute"}
         // border={"1px solid black"}
         // bg={"white"}
       >
@@ -149,7 +149,7 @@ const UserAddress = () => {
       <Box
         // border={"1px solid blue"}
         m={"auto"}
-        mt={"50px"}
+        mt={{ base: "20px", md: "40px", lg: "50px" }}
         w={{ base: "95vw", md: "60vw", lg: "65vw" }}
         // h={"70vh"}
         display={"flex"}

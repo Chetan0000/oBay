@@ -19,6 +19,7 @@ import UserPage from "./pagse/userPage/UserPage";
 import WIshListPage from "./pagse/WIshLIst/WIshListPage";
 import UserProfile from "./pagse/Profile/UserProfile";
 import Orders from "./pagse/Orders/Orders";
+import Footer from "./components/home/Footer/Footer";
 // ------seller components -----------
 
 import SellerPage from "./pagse/SellerPage/sellerPage";
@@ -35,15 +36,19 @@ import PaymentSuccess from "./components/Payment/PaymentSuccess";
 import ContactMe from "./pagse/ContactMe/ContactMe";
 import Products from "./components/home/Product/Products";
 import SellerOrders from "./seller-Dash/seller-dashboard/SellerOrders";
+import { useDispatch, useSelector } from "react-redux";
+import ViewProduct from "./seller-Dash/seller-dashboard/ViewProduct";
+
 const App = () => {
   const [isLogin, setLsLogin] = useState(false);
-  const { user, seller } = UserState();
+  const user = useSelector((state) => state.user.user);
+  const seller = useSelector((state) => state.seller.seller);
   // console.log("------------ ", seller);
   if (seller) {
   }
   return (
     <>
-      <div>
+      <div className="flex flex-col">
         {/* {seller && window.location.pathname !== "/seller" ? (
           <SellerHeader />
         ) : (
@@ -54,7 +59,7 @@ const App = () => {
         {window.location.pathname === "/seller" ||
         window.location.pathname === "/user" ||
         window.location.pathname === "/contactMe" ? null : ( // window.location.pathname === "/payment/success"
-          <>{(seller && <SellerHeader />) || <Header />}</>
+          <>{(seller != 0 && <SellerHeader />) || <Header />}</>
         )}
         <Routes>
           <Route path="/seller" element={<SellerPage />}></Route>
@@ -81,11 +86,17 @@ const App = () => {
           {/* ---------------------- seller Routes ------------------------ */}
 
           <Route path="/seller/dash" element={<SellerDashBoard />}></Route>
+          <Route path="/seller/products/view" element={<ViewProduct />}></Route>
           <Route path="/seller/addProduct" element={<AddProduct />}></Route>
           <Route path="/seller/profile" element={<Profile />}></Route>
           <Route path="/seller/orders" element={<SellerOrders />}></Route>
           {/* <Route path="/seller/view" element={<ViewProduct />}></Route> */}
         </Routes>
+        {window.location.pathname === "/seller" ||
+        window.location.pathname === "/user" ||
+        window.location.pathname === "/contactMe" ? null : ( // window.location.pathname === "/payment/success"
+          <Footer />
+        )}
       </div>
     </>
   );

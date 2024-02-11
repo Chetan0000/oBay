@@ -17,11 +17,11 @@ import { UserState } from "../../context/userContext";
 import axios from "axios";
 import UseAnimations from "react-useanimations";
 import trash2 from "react-useanimations/lib/trash2";
+import { useSelector } from "react-redux";
 const ViewProduct = () => {
-  const { seller, setSellerSelectedProduct, sellerSelectedProduct } =
-    UserState();
-
-  const location = useNavigate();
+  const { setSellerSelectedProduct, sellerSelectedProduct } = UserState();
+  const seller = useSelector((state) => state.seller.seller);
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
   const [images, setImages] = useState();
@@ -186,6 +186,7 @@ const ViewProduct = () => {
       flexDirection={"column"}
       justifyContent={"center"}
       alignItems={"center"}
+      // mt={{ base: "80px", md: "0px", lg: "0px" }}
       // paddingTop={{ base: "20px" }}
       // border={"1px solid red"}
     >
@@ -193,6 +194,8 @@ const ViewProduct = () => {
         width={"80%"}
         display={"flex"}
         justifyContent={"flex-start"}
+        paddingY={"4px"}
+        paddingX={"10px"}
         // paddingY={"4px"}
         // paddingX={"10px"}
         // marginTop={"-100px"}
@@ -201,7 +204,7 @@ const ViewProduct = () => {
         <Box
           cursor={"pointer"}
           onClick={() => {
-            setSellerSelectedProduct("");
+            navigate(-1);
           }}
         >
           <IoMdArrowBack />

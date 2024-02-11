@@ -1,11 +1,41 @@
 import { Box } from "@chakra-ui/react";
-import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import AllProducts from "./AllProducts";
+import { useDispatch, useSelector } from "react-redux";
+import toast, { Toast } from "react-hot-toast";
+import axios from "axios";
 const SellerDashBoard = () => {
+  const [products, setProducts] = useState([]);
+  const seller = useSelector((state) => state.seller.seller);
+
   useEffect(() => {
     // window.location.reload();
+    fetchProducts();
   }, []);
+
+  // ----------------function to fetch all products---------------
+
+  const fetchProducts = async () => {
+    if (seller == 0) {
+      return;
+    }
+
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${seller.token}`,
+        },
+      };
+
+      const { data } = await axios.get(`/seller/products`, config);
+
+      setProducts(data);
+    } catch (error) {
+      toast.error("Something went Wrong.. Please refresh the page  ", {
+        duration: 3000,
+      });
+    }
+  };
 
   return (
     <>
@@ -27,7 +57,7 @@ const SellerDashBoard = () => {
             <SellerMenu />
           </Box>
         </Box> */}
-        <AllProducts></AllProducts>
+        <AllProducts products={products}></AllProducts>
       </Box>
     </>
   );

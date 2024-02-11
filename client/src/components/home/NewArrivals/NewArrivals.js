@@ -123,7 +123,7 @@ const NewArrivals = () => {
           color={"black"}
         >
           New Arrivals
-          {console.log(items)}
+          {/* {console.log(items)} */}
         </Text>
         <Box>
           <Slider {...settings}>

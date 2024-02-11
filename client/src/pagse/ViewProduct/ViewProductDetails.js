@@ -36,7 +36,7 @@ import Product from "../../components/home/NewArrivals/Product";
 
 const ViewProductDetails = () => {
   window.scrollBy(0, -10000);
-  const product = useSelector((state) => state.selectedProduct.selectedProduct);
+  let product = useSelector((state) => state.selectedProduct.selectedProduct);
   const user = useSelector((state) => state.user.user);
   const [ratingGiven, setRatingGiven] = useState();
   const [reviewGiven, setReviewGiven] = useState();
@@ -47,10 +47,27 @@ const ViewProductDetails = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  // useEffect(() => {
+  //   if (!product.name) {
+  //     getData();
+  //   }
+  // });
+
   // ------------ popup functionality -----------
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   // ----------------Business Logics ------------------
+
+  //  function to load product details by id if not available
+
+  // const getData = async () => {
+  //   try {
+  //     product = data;
+  //   } catch (error) {
+  //     console.log(error);
+  //     return;
+  //   }
+  // };
 
   const addToCartt = () => {
     dispatch(addItemsToCart(product, 1, user));
@@ -116,7 +133,8 @@ const ViewProductDetails = () => {
   // ----------------------- react slick ---------------
   const settings = {
     dots: false,
-    infinite: true,
+    // infinite: true,
+    swipeToSlide: true,
     autoplay: false,
     speed: 500,
 
@@ -132,7 +150,7 @@ const ViewProductDetails = () => {
         settings: {
           slidesToShow: 3,
           slidesToScroll: 3,
-          infinite: true,
+
           dots: true,
         },
       },

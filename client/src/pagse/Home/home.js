@@ -4,6 +4,7 @@ import BannerBottom from "../../components/home/Banner/BannerBottom";
 import { Box, Stat } from "@chakra-ui/react";
 import { UserState } from "../../context/userContext";
 import NewArrivals from "../../components/home/NewArrivals/NewArrivals";
+import Featured from "../../components/home/Featured/Featured";
 import {
   RemoveScrollBar,
   noScrollbarsClassName,
@@ -16,6 +17,7 @@ const Home = () => {
   const { selectedItem, setSelectedItem } = UserState();
   useEffect(() => {
     console.log(selectedItem);
+    window.scrollTo(0, 0);
   }, [selectedItem]);
   const user = useSelector((state) => state.user.user);
   const cartItems = useSelector((state) => state.cart.products);
@@ -29,13 +31,17 @@ const Home = () => {
         justifyContent={"center"}
         flexDirection={"column"}
         alignItems={"center"}
-        border={"2px solid red"}
+        // border={"2px solid red"}
         overflow={"hidden"}
       >
         <Banner />
         <BannerBottom />
-        <div className="pt-[50px]">
+        <div id="NewArrivals_BOX" className="pt-[50px]">
           <NewArrivals />
+        </div>
+
+        <div id="Featured_BOX" className="pt-[50px]">
+          <Featured />
         </div>
 
         <Box h={"200px"}></Box>
