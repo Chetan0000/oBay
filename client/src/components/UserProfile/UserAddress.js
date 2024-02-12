@@ -31,6 +31,10 @@ const UserAddress = () => {
   const [city, setCity] = useState();
   const [addressId, setAddressId] = useState();
   useEffect(() => {
+    if (userData == 0) {
+      navigate("/user");
+    }
+    window.scrollTo(0, 0);
     fetchAddress();
   }, []);
 

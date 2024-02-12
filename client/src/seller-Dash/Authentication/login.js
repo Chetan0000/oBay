@@ -153,7 +153,7 @@ const Login = () => {
               color={"white"}
               width={"100%"}
               onClick={() => {
-                setEmail("testSeller@gmail.com");
+                setEmail("seller101@gmail.com");
                 setPassword("123456");
               }}
             >

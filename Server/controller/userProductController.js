@@ -66,7 +66,7 @@ const searchResults = asyncHandler(async (req, res) => {
       $or: [
         { name: { $regex: keyword, $options: "i" } },
         { description: { $regex: keyword, $options: "i" } },
-        // { category: req.body.category },
+        { category: { $regex: keyword, $options: "i" } },
       ],
     })),
   };

@@ -286,7 +286,7 @@ const addReview = asyncHandler(async (req, res) => {
   }
 });
 
-// ---------- Function to all the orders --------------
+// ---------- Function to get all the orders --------------
 const getOrders = asyncHandler(async (req, res) => {
   const user = req.user;
 

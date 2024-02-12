@@ -133,7 +133,7 @@ const ViewProductDetails = () => {
   // ----------------------- react slick ---------------
   const settings = {
     dots: false,
-    // infinite: true,
+    infinite: false,
     swipeToSlide: true,
     autoplay: false,
     speed: 500,
@@ -146,8 +146,10 @@ const ViewProductDetails = () => {
     responsive: [
       {
         // length: 3,
+
         breakpoint: 1024,
         settings: {
+          infinite: false,
           slidesToShow: 3,
           slidesToScroll: 3,
 
@@ -157,6 +159,7 @@ const ViewProductDetails = () => {
       {
         breakpoint: 600,
         settings: {
+          infinite: false,
           slidesToShow: 2,
           slidesToScroll: 2,
           initialSlide: 1,
@@ -166,6 +169,7 @@ const ViewProductDetails = () => {
         breakpoint: 480,
         settings: {
           slidesToShow: 1,
+          infinite: false,
           slidesToScroll: 1,
         },
       },

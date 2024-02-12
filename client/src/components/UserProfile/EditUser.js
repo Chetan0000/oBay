@@ -20,6 +20,10 @@ const EditUser = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (userData == 0) {
+      navigate("/user");
+    }
+    window.scrollTo(0, 0);
     setEmail(userData.email);
     setName(userData.name);
     setPhone(userData.phone);

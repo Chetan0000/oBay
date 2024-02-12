@@ -1,12 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Avatar, Box, Button, Image, Text } from "@chakra-ui/react";
 import { useSelector, useDispatch } from "react-redux";
 import { deleteUserData } from "../../actions/userActions";
 import { useNavigate } from "react-router-dom";
+import { TiShoppingCart } from "react-icons/ti";
 const UserProfile = () => {
   const user = useSelector((state) => state.user.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  useEffect(() => {
+    if (user == 0) {
+      navigate("/user");
+    }
+    window.scrollTo(0, 0);
+  });
+
   //-------- Log Out function --------------
   const handelClick = () => {
     if (user) {
@@ -21,7 +29,7 @@ const UserProfile = () => {
       <Box
         className="Container"
         w={{ base: "95vw", md: "95vw", lg: "85vw" }}
-        h={"85vh"}
+        minH={"85vh"}
         // border={"2px solid red"}
         m={"auto"}
         marginTop={"20px"}
@@ -69,6 +77,7 @@ const UserProfile = () => {
               justifyContent={"center"}
               alignItems={"center"}
               cursor={"pointer"}
+              transitionDuration={"0.2s"}
               _hover={{
                 bg: "#eeeeee",
                 transitionDuration: "0.2s",
@@ -99,6 +108,7 @@ const UserProfile = () => {
               justifyContent={"center"}
               alignItems={"center"}
               cursor={"pointer"}
+              transitionDuration={"0.2s"}
               _hover={{
                 bg: "#eeeeee",
                 transitionDuration: "0.2s",
@@ -133,6 +143,7 @@ const UserProfile = () => {
               justifyContent={"center"}
               alignItems={"center"}
               cursor={"pointer"}
+              transitionDuration={"0.2s"}
               _hover={{
                 bg: "#eeeeee",
                 transitionDuration: "0.2s",
@@ -178,6 +189,7 @@ const UserProfile = () => {
               justifyContent={"center"}
               alignItems={"center"}
               cursor={"pointer"}
+              transitionDuration={"0.2s"}
               _hover={{
                 bg: "#eeeeee",
                 transitionDuration: "0.2s",
@@ -187,8 +199,8 @@ const UserProfile = () => {
                 navigate("/cart");
               }}
             >
-              <Box h={"75%"} w={"92px"} objectFit={"cover"}>
-                <Image src="https://m.media-amazon.com/images/G/31/x-locale/cs/ya/images/sign-in-lock._CB485931504_.png"></Image>
+              <Box h={"75%"} w={"90px"} objectFit={"cover"}>
+                <TiShoppingCart size={70} color="#7C7C7C" />
               </Box>
               <Box>
                 <Text fontSize={"17px"}> Cart</Text>
@@ -208,6 +220,7 @@ const UserProfile = () => {
               justifyContent={"start"}
               alignItems={"center"}
               cursor={"pointer"}
+              transitionDuration={"0.2s"}
               _hover={{
                 bg: "#eeeeee",
                 transitionDuration: "0.2s",
@@ -241,11 +254,11 @@ const UserProfile = () => {
               justifyContent={"center"}
               alignItems={"center"}
               // cursor={"pointer"}
-              _hover={{
-                bg: "#eeeeee",
-                transitionDuration: "0.2s",
-                transitionTimingFunction: "ease-in-out",
-              }}
+              // _hover={{
+              //   bg: "#eeeeee",
+              //   transitionDuration: "0.2s",
+              //   transitionTimingFunction: "ease-in-out",
+              // }}
               // onClick={() => {
               //   navigate("/wishList");
               // }}
@@ -274,10 +287,11 @@ const UserProfile = () => {
         <Box
           // border={"1px solid yellow"}
           display={"flex"}
-          justifyContent={{ base: "center", md: "end", lg: "end" }}
+          justifyContent={{ base: "end", md: "end", lg: "end" }}
           marginTop={"10px"}
           pt={"10px"}
           pb={"10px"}
+          mr={{ base: "10px", md: "00px", lg: "0px" }}
         >
           <Button
             color={"white"}

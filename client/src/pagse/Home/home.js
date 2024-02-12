@@ -44,7 +44,7 @@ const Home = () => {
           <Featured />
         </div>
 
-        <Box h={"200px"}></Box>
+        {/* <Box h={"100px"}></Box> */}
       </Box>
     </>
   );

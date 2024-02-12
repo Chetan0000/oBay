@@ -95,7 +95,7 @@ const App = () => {
         {window.location.pathname === "/seller" ||
         window.location.pathname === "/user" ||
         window.location.pathname === "/contactMe" ? null : ( // window.location.pathname === "/payment/success"
-          <Footer />
+          <>{(seller != 0 && <></>) || <Footer />}</>
         )}
       </div>
     </>

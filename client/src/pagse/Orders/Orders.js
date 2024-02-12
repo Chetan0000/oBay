@@ -12,6 +12,10 @@ const Orders = () => {
 
   useEffect(() => {
     fetchData();
+    if (user == 0) {
+      navigate("/user");
+    }
+    window.scrollTo(0, 0);
   }, [user]);
 
   const fetchData = async () => {
@@ -132,7 +136,17 @@ const Orders = () => {
                           lg: "center",
                         }}
                       >
-                        <Text>OrderId: {order.orderID}</Text>
+                        <Text
+                          display={"flex"}
+                          flexDirection={{
+                            base: "column",
+                            md: "row",
+                            lg: "row",
+                          }}
+                        >
+                          <Text fontWeight={"semibold"}>OrderId: </Text>
+                          {order.orderID}
+                        </Text>
                         <Text>{order.createdAt.substring(0, 10)}</Text>
                       </Box>
 
