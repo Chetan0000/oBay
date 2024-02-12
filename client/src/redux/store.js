@@ -1,9 +1,9 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import cartReducer from "./slices/cart/cartSlice";
-import wishListReducer from "./slices/wishList/wishListSlice";
-import userReducer from "./slices/userSlice/userSlice";
-import productReducer from "./slices/Product/ProductSlice";
-import searchReducer from "./slices/searchSlice/searchSlice";
+import cartReducer from "./slices/cart/cartSlice.js";
+import wishListReducer from "./slices/wishList/wishListSlice.js";
+import userReducer from "./slices/userSlice/userSlice.js";
+import productReducer from "./slices/Product/ProductSlice.js";
+import searchReducer from "./slices/searchSlice/searchSlice.js";
 import {
   persistStore,
   persistReducer,
@@ -15,7 +15,7 @@ import {
   REGISTER,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import sellerReducer from "./slices/SellerSlices/sellerSlice";
+import sellerReducer from "./slices/SellerSlices/sellerSlice.js";
 const persistConfig = {
   key: "root",
   version: 1,
