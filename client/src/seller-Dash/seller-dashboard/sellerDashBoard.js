@@ -11,7 +11,7 @@ const SellerDashBoard = () => {
   useEffect(() => {
     // window.location.reload();
     fetchProducts();
-  }, []);
+  });
 
   // ----------------function to fetch all products---------------
 
