@@ -8,14 +8,16 @@ const reviewSchema = mongoose.Schema({
   reviewer: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
+    required: true,
   },
   seller: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Seller",
+    required: true,
   },
   rating: {
     type: Number,
-    default: 0,
+    required: true,
   },
   comment: {
     type: String,
