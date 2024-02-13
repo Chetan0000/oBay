@@ -1,7 +1,7 @@
 import { Box } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import AllProducts from "./AllProducts";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import toast, { Toast } from "react-hot-toast";
 import axios from "axios";
 const SellerDashBoard = () => {
@@ -31,7 +31,7 @@ const SellerDashBoard = () => {
 
       setProducts(data);
     } catch (error) {
-      toast.error("Something went Wrong.. Please refresh the page  ", {
+      toast.error("Something went Wrong.. Please refresh the page..!", {
         duration: 3000,
       });
     }
