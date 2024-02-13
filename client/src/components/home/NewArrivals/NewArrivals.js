@@ -136,6 +136,7 @@ const NewArrivals = () => {
                   }}
                 >
                   <Product
+                    product={product}
                     _id={product._id}
                     image={product.images}
                     name={product.name}

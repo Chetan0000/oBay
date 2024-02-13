@@ -79,6 +79,7 @@ const Login = () => {
       flexDirection={"column"}
       w={"100vw"}
       h={"90vh"}
+      mt={"30px"}
     >
       <Box
         w={{ base: "75%", md: "45%", lg: "45%" }}
@@ -160,7 +161,7 @@ const Login = () => {
                 setPassword("123456");
               }}
             >
-              Test Seller
+              Test User
             </Button>
           </Box>
         </Box>

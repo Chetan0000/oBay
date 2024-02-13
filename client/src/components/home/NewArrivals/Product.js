@@ -18,7 +18,9 @@ import ReactStars from "react-rating-stars-component";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addSelectedProduct } from "../../../redux/slices/Product/ProductSlice";
+import { addItemsToCart } from "../../../actions/cartActions";
 const Product = ({
+  product,
   _id,
   image,
   name,
@@ -33,6 +35,8 @@ const Product = ({
 }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.user);
+
   const handelClick = () => {
     dispatch(
       addSelectedProduct({
@@ -48,6 +52,11 @@ const Product = ({
       })
     );
     navigate("/view/product");
+  };
+
+  const buyNow = () => {
+    dispatch(addItemsToCart(product, 1, user));
+    navigate("/cart");
   };
   return (
     <Box
@@ -125,6 +134,10 @@ const Product = ({
               color={"white"}
               _hover={{
                 bg: "#191919",
+              }}
+              onClick={(e) => {
+                buyNow();
+                e.stopPropagation();
               }}
             >
               Buy
