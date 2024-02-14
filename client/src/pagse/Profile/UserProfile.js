@@ -227,7 +227,7 @@ const UserProfile = () => {
                 transitionTimingFunction: "ease-in-out",
               }}
               onClick={() => {
-                navigate("/contactMe");
+                // navigate("/contactMe");
               }}
             >
               <Box
